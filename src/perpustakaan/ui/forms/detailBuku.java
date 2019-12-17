@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package perpustakaan.ui;
+package perpustakaan.ui.forms;
 
 /**
  *
  * @author LENOVO
  */
-public class Login extends javax.swing.JFrame {
+public class detailBuku extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public detailBuku() {
         initComponents();
+        sidebarBg.setImage("background.png");
     }
 
     /**
@@ -29,18 +30,16 @@ public class Login extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel5 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        imageLabel1 = new perpustakaan.ui.classes.ImageLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        sidebarBg = new perpustakaan.ui.classes.ImagePanel();
+        jLabel1 = new javax.swing.JLabel();
+        panelKiri = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -54,70 +53,23 @@ public class Login extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(546, 768));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        sidebarBg.setLayout(new java.awt.GridBagLayout());
 
-        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/e- library.png"))); // NOI18N
-        imageLabel1.setToolTipText("");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        jPanel1.add(imageLabel1, gridBagConstraints);
+        jLabel1.setText("jLabel1");
+        sidebarBg.add(jLabel1, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel1, gridBagConstraints);
+        gridBagConstraints.weightx = 0.3;
+        getContentPane().add(sidebarBg, gridBagConstraints);
 
-        jPanel2.setBackground(new java.awt.Color(247, 236, 235));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
-        jPanel2.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanel2.setPreferredSize(new java.awt.Dimension(820, 768));
-        jPanel2.setLayout(new java.awt.GridBagLayout());
-
-        jPanel3.setBackground(new java.awt.Color(247, 236, 235));
-        jPanel3.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanel3.setName(""); // NOI18N
-        jPanel3.setPreferredSize(new java.awt.Dimension(820, 256));
-        jPanel3.setLayout(new java.awt.GridBagLayout());
-
-        jLabel2.setFont(new java.awt.Font("Source Sans Pro", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("LIKE A ROOM WITHOUT WINDOWS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel3.add(jLabel2, gridBagConstraints);
-
-        jLabel3.setFont(new java.awt.Font("Source Sans Pro", 1, 42)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("A HOUSE WITHOUT BOOKS IS ");
-        jLabel3.setToolTipText("");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel3.add(jLabel3, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.33;
-        jPanel2.add(jPanel3, gridBagConstraints);
+        panelKiri.setBackground(new java.awt.Color(247, 236, 235));
+        panelKiri.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        panelKiri.setMinimumSize(new java.awt.Dimension(0, 0));
+        panelKiri.setPreferredSize(new java.awt.Dimension(820, 768));
+        panelKiri.setLayout(new java.awt.GridBagLayout());
 
         jPanel4.setBackground(new java.awt.Color(247, 236, 235));
         jPanel4.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -194,19 +146,25 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel4.add(btnLogin, gridBagConstraints);
 
+        jPanel3.setBackground(new java.awt.Color(247, 236, 235));
+        jPanel3.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel3.setName(""); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(820, 256));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanel4.add(jPanel3, new java.awt.GridBagConstraints());
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.67;
-        jPanel2.add(jPanel4, gridBagConstraints);
+        panelKiri.add(jPanel4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.weightx = 0.7;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel2, gridBagConstraints);
+        getContentPane().add(panelKiri, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -249,24 +207,22 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new detailBuku().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private perpustakaan.ui.classes.ImageLabel imageLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel panelKiri;
     private javax.swing.JPasswordField passwordField;
+    private perpustakaan.ui.classes.ImagePanel sidebarBg;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
