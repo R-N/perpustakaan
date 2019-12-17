@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lcdrpl.gui;
+package perpustakaan.ui.classes;
+
 
 import javax.swing.SwingUtilities;
 

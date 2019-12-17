@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lcdrpl.gui;
+package perpustakaan.ui.classes;
 
 import javax.swing.JPanel;
 
@@ -21,6 +21,7 @@ public class ImagePanel extends JPanel
     private static final long serialVersionUID = 1L;
     
     private ImageIcon imageIcon = null;
+    public String path = "/perpustakaan/ui/gambar/";
     private int iWidth2;
     private int iHeight2;
     
@@ -33,7 +34,7 @@ public class ImagePanel extends JPanel
     }
     
     public void setImage(String iconName){
-        setImage(new javax.swing.ImageIcon(getClass().getResource("/lcdrpl/images/" + iconName)));
+        setImage(new javax.swing.ImageIcon(getClass().getResource(path + iconName)));
     }
     
 
