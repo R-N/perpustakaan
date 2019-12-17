@@ -30,11 +30,10 @@ public class detailBuku extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel5 = new javax.swing.JPanel();
-        sidebarBg = new perpustakaan.ui.classes.ImagePanel();
-        jLabel1 = new javax.swing.JLabel();
+        sidebar1 = new perpustakaan.ui.forms.sidebar();
         panelKiri = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        form = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
@@ -55,15 +54,11 @@ public class detailBuku extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        sidebarBg.setLayout(new java.awt.GridBagLayout());
-
-        jLabel1.setText("jLabel1");
-        sidebarBg.add(jLabel1, new java.awt.GridBagConstraints());
-
+        sidebar1.setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.3;
-        getContentPane().add(sidebarBg, gridBagConstraints);
+        getContentPane().add(sidebar1, gridBagConstraints);
 
         panelKiri.setBackground(new java.awt.Color(247, 236, 235));
         panelKiri.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
@@ -77,15 +72,15 @@ public class detailBuku extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(820, 512));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel4.setText("Username");
+        form.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        form.setForeground(new java.awt.Color(84, 88, 113));
+        form.setText("Username");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel4.add(jLabel4, gridBagConstraints);
+        jPanel4.add(form, gridBagConstraints);
 
         username.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         username.setToolTipText("username");
@@ -214,15 +209,14 @@ public class detailBuku extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel form;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel panelKiri;
     private javax.swing.JPasswordField passwordField;
-    private perpustakaan.ui.classes.ImagePanel sidebarBg;
+    private perpustakaan.ui.forms.sidebar sidebar1;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
