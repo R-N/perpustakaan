@@ -95,8 +95,9 @@ public class sidebar extends ImagePanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(40, 40, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 0);
         add(jPanel1, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
