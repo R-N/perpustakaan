@@ -18,6 +18,7 @@ public class sidebar extends ImagePanel {
      */
     public sidebar() {
         initComponents();
+        setImage("background.png");
     }
 
     /**
@@ -30,60 +31,94 @@ public class sidebar extends ImagePanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         icon = new javax.swing.JLabel();
+        icon1 = new javax.swing.JLabel();
+        icon2 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(0, 0));
+        setOpaque(false);
         setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-
+        jLabel1.setBackground(new java.awt.Color(240, 230, 240));
         jLabel1.setFont(new java.awt.Font("Source Sans Pro", 1, 50)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 230, 240));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("E - Library");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 1;
-        jPanel1.add(jLabel1, gridBagConstraints);
+        add(jLabel1, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 30, 0);
-        add(jPanel1, gridBagConstraints);
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
-
-        icon.setFont(new java.awt.Font("Source Sans Pro", 0, 24)); // NOI18N
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
+        icon.setForeground(new java.awt.Color(240, 230, 240));
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
+        icon.setText("My Book");
         icon.setAlignmentX(0.5F);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 450);
-        jPanel2.add(icon, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+        jPanel1.add(icon, gridBagConstraints);
+
+        icon1.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
+        icon1.setForeground(new java.awt.Color(240, 230, 240));
+        icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
+        icon1.setText("Daftar Peminjaman");
+        icon1.setAlignmentX(0.5F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+        jPanel1.add(icon1, gridBagConstraints);
+
+        icon2.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
+        icon2.setForeground(new java.awt.Color(240, 230, 240));
+        icon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
+        icon2.setText("Riwayat Peminjaman");
+        icon2.setAlignmentX(0.5F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+        jPanel1.add(icon2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jPanel2, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 40, 0, 0);
+        add(jPanel1, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/Logout.png"))); // NOI18N
+        jLabel2.setMinimumSize(new java.awt.Dimension(0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+        add(jLabel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel icon;
+    private javax.swing.JLabel icon1;
+    private javax.swing.JLabel icon2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
