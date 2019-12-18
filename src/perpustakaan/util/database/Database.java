@@ -13,9 +13,9 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import perpustakaan.util.Config;
 import perpustakaan.util.Util;
-import perpustakaan.util.database.CallableStatement;
-import perpustakaan.util.database.PreparedStatement;
-import perpustakaan.util.database.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 
 /**
  *
@@ -23,8 +23,6 @@ import perpustakaan.util.database.ResultSet;
  */
 public class Database {
     public static final String url = "jdbc:sqlite:perpus.db";
-    static final String username = "client";
-    static final String password = "asdfasdf";
     public static Database instance = null;
     
     public Connection conn;
@@ -76,9 +74,8 @@ public class Database {
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             instance = this;
-            setAutoCommit(false);
+            //setAutoCommit(false);
             Util.log("Connected");
-            Config.init();
             return true;
         } catch (SQLException ex) {
             Util.handleException(ex);
@@ -88,21 +85,15 @@ public class Database {
     
     public static PreparedStatement prepareStatement(String sql){
         try{
-            Database conn = getInstance();
-            return new PreparedStatement(conn, conn.conn.prepareStatement(sql));
+            return getInstance().conn.prepareStatement(
+                            sql, 
+                            java.sql.PreparedStatement.RETURN_GENERATED_KEYS
+            );
         }catch(java.sql.SQLException ex){
             throw new RuntimeException(ex);
         }
     }
     
-    public static CallableStatement prepareCall(String sql){
-        try{
-            Database conn = getInstance();
-            return new CallableStatement(conn, conn.conn.prepareCall(sql));
-        }catch(java.sql.SQLException ex){
-            throw new RuntimeException(ex);
-        }
-    }
     
     public Statement createStatement(){
         try{

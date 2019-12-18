@@ -8,9 +8,8 @@ package perpustakaan.util;
 import java.util.Locale;
 import java.sql.SQLException;
 import perpustakaan.util.database.Database;
-import perpustakaan.util.database.PreparedStatement;
-import perpustakaan.util.database.ResultSet;
-
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 /**
  *
  * @author MojoMacW7
@@ -44,31 +43,44 @@ public class Config {
     }
     
     public static boolean saveIfNotExists(String name, String value) {
-        PreparedStatement pstmt = Database.prepareStatement("INSERT OR IGNORE INTO Config(name, value) VALUES(?, ?)");
-        pstmt.setString(1, name);
-        pstmt.setString(2, value);
-        int rows = pstmt.executeUpdate();
-        if(Database.commit()){
-            return rows>0;
+        try{
+            PreparedStatement pstmt = Database.prepareStatement("INSERT OR IGNORE INTO Config(name, value) VALUES(?, ?)");
+            pstmt.setString(1, name);
+            pstmt.setString(2, value);
+            int rows = pstmt.executeUpdate();
+            if(Database.commit()){
+                return rows>0;
+            }
+            return false;
+        }catch(SQLException ex){
+            Util.handleException(ex);
         }
         return false;
     }
     public static boolean save(String name, String value) {
-        PreparedStatement pstmt = Database.prepareStatement("UPDATE Config SET value=? WHERE name=?");
-        pstmt.setString(2, name);
-        pstmt.setString(1, value);
-        int ret = pstmt.executeUpdate();
-        if(ret>0){
-            return Database.commit();
+        try{
+            PreparedStatement pstmt = Database.prepareStatement("UPDATE Config SET value=? WHERE name=?");
+            pstmt.setString(2, name);
+            pstmt.setString(1, value);
+            int ret = pstmt.executeUpdate();
+            if(ret>0){
+                return Database.commit();
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
         }
         return false;
     }
     public static String get(String name) {
-        PreparedStatement pstmt =Database.prepareStatement("SELECT value FROM Config WHERE name=?");
-        pstmt.setString(1, name);
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()){
-            return rs.getString(1);
+        try{
+            PreparedStatement pstmt =Database.prepareStatement("SELECT value FROM Config WHERE name=?");
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                return rs.getString(1);
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
         }
         return null;
     }
