@@ -22,6 +22,9 @@ public class MainPanel extends javax.swing.JPanel {
         init();
     }
     
+    String currentCard = null;
+    String previousCard = null;
+    
     public void init(){
         sidebarPanel.init(this);
         daftarBukuPanel.init(this);
@@ -30,10 +33,19 @@ public class MainPanel extends javax.swing.JPanel {
         editBukuPanel.init(this);
         riwayatPeminjamanPanel.init(this);
         tambahBukuPanel.init(this);
+        showCard("daftarbuku");
     }
     
     public void showCard(String card){
+        previousCard = currentCard;
+        currentCard = card;
         mainLayout.show(mainPanel, card);
+    }
+    
+    public void previousCard(){
+        if(previousCard == null) return;
+        showCard(previousCard);
+        previousCard = null;
     }
 
     /**
