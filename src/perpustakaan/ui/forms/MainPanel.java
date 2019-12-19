@@ -47,6 +47,10 @@ public class MainPanel extends javax.swing.JPanel {
         showCard(previousCard);
         previousCard = null;
     }
+        
+    public void logout(){
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
