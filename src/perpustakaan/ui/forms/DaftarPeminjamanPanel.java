@@ -5,11 +5,14 @@
  */
 package perpustakaan.ui.forms;
 
+import javax.swing.JPanel;
+import perpustakaan.ui.classes.IMainPanel;
+
 /**
  *
  * @author LENOVO
  */
-public class DaftarPeminjamanPanel extends javax.swing.JPanel {
+public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPanel {
 
     /**
      * Creates new form DaftarPeminjamanPanel
@@ -26,6 +29,18 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel {
 
     public void init(MainPanel parent){
         setParent(parent);
+    }
+    @Override
+    public void refresh() {
+    }
+
+    @Override
+    public void load(Object object) {
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,11 +88,7 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Kode Buku", "Kode Peminjaman", "Nama Peminjam", "Tanggal Pinjam"
@@ -153,4 +164,5 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton lihatButton;
     // End of variables declaration//GEN-END:variables
+
 }

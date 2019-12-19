@@ -5,18 +5,27 @@
  */
 package perpustakaan.ui.forms;
 
+import javax.swing.JPanel;
+import perpustakaan.classes.Buku;
+import perpustakaan.ui.classes.IMainPanel;
+
 /**
  *
  * @author LENOVO
  */
-public class TambahBukuPanel extends javax.swing.JPanel {
+public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
     /**
      * Creates new form TambahBukuPanel
      */
+    
+    Buku buku = null;
+    
     public TambahBukuPanel() {
         initComponents();
     }
+    
+    
 
     MainPanel parent;
     public void setParent(MainPanel parent){
@@ -26,6 +35,73 @@ public class TambahBukuPanel extends javax.swing.JPanel {
 
     public void init(MainPanel parent){
         setParent(parent);
+    }
+    
+    @Override
+    public void refresh() {
+        load(null);
+    }
+
+    @Override
+    public void load(Object object) {
+        if(object == null){
+            this.buku = null;
+            kodeBukuField.setText("");
+            kodeBukuField.setEditable(true);
+            judulBukuField.setText("");
+            penulisBukuField.setText("");
+            titleLabel.setText("My Book / Tambah Buku");
+            return;
+        }
+        if(object instanceof Buku){
+            this.buku = (Buku)object;
+            kodeBukuField.setText(buku.kodeBuku);
+            kodeBukuField.setEditable(false);
+            judulBukuField.setText(buku.judulBuku);
+            penulisBukuField.setText(buku.penulisBuku);
+            titleLabel.setText("My Book / Edit Buku");
+        }
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
+    }
+    
+    public Buku read(){
+        String judulBuku = judulBukuField.getText();
+        String penulisBuku = penulisBukuField.getText();
+        String kodeBuku = kodeBukuField.getText();
+
+        Buku buku1 = new Buku(
+                kodeBuku,
+                judulBuku,
+                penulisBuku
+        );
+        if(this.buku == null){
+            return buku1;
+        }else{
+            return buku.clone().read(buku1);
+        }
+    }
+    public boolean tambahBuku(){
+        Buku buku = read();
+        
+        return buku.insert();
+    }
+    
+    public boolean updateBuku(){
+        Buku buku1 = read();
+        
+        return buku1.update();
+    }
+    
+    public boolean simpanBuku(){
+        if(this.buku == null){
+            return tambahBuku();
+        }else{
+            return updateBuku();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,15 +114,15 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         Header = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         tabel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        kodeBukuField = new javax.swing.JTextField();
+        judulBukuField = new javax.swing.JTextField();
+        penulisBukuField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         Footer = new javax.swing.JPanel();
         batalButton = new javax.swing.JButton();
@@ -58,10 +134,10 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         Header.setOpaque(false);
         Header.setLayout(new java.awt.GridBagLayout());
 
-        jLabel4.setFont(new java.awt.Font("Source Sans Pro Semibold", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel4.setText("My Book / Edit Buku");
-        jLabel4.setMinimumSize(new java.awt.Dimension(0, 0));
+        titleLabel.setFont(new java.awt.Font("Source Sans Pro Semibold", 0, 24)); // NOI18N
+        titleLabel.setForeground(new java.awt.Color(84, 88, 113));
+        titleLabel.setText("My Book / Tambah Buku");
+        titleLabel.setMinimumSize(new java.awt.Dimension(0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -69,7 +145,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        Header.add(jLabel4, gridBagConstraints);
+        Header.add(titleLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -111,7 +187,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel7.setText("nama penulis Buku");
+        jLabel7.setText("Penulis");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -133,11 +209,11 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         tabel.add(jLabel10, gridBagConstraints);
 
-        jTextField1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(84, 88, 113));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        kodeBukuField.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        kodeBukuField.setForeground(new java.awt.Color(84, 88, 113));
+        kodeBukuField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                kodeBukuFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -146,13 +222,13 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-        tabel.add(jTextField1, gridBagConstraints);
+        tabel.add(kodeBukuField, gridBagConstraints);
 
-        jTextField2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(84, 88, 113));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        judulBukuField.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        judulBukuField.setForeground(new java.awt.Color(84, 88, 113));
+        judulBukuField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                judulBukuFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -161,13 +237,13 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-        tabel.add(jTextField2, gridBagConstraints);
+        tabel.add(judulBukuField, gridBagConstraints);
 
-        jTextField3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(84, 88, 113));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        penulisBukuField.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        penulisBukuField.setForeground(new java.awt.Color(84, 88, 113));
+        penulisBukuField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                penulisBukuFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -176,7 +252,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-        tabel.add(jTextField3, gridBagConstraints);
+        tabel.add(penulisBukuField, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(114, 100, 139));
@@ -239,17 +315,17 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         add(Footer, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void kodeBukuFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBukuFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_kodeBukuFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void judulBukuFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_judulBukuFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_judulBukuFieldActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void penulisBukuFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penulisBukuFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_penulisBukuFieldActionPerformed
 
     private void batalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalButtonActionPerformed
         // TODO add your handling code here:
@@ -258,7 +334,11 @@ public class TambahBukuPanel extends javax.swing.JPanel {
 
     private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
         // TODO add your handling code here:
-        parent.showCard("daftarbuku");
+        if(simpanBuku()){
+            parent.showCard("daftarbuku");
+        }else{
+            
+        }
     }//GEN-LAST:event_simpanButtonActionPerformed
 
 
@@ -269,13 +349,14 @@ public class TambahBukuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField judulBukuField;
+    private javax.swing.JTextField kodeBukuField;
+    private javax.swing.JTextField penulisBukuField;
     private javax.swing.JButton simpanButton;
     private javax.swing.JPanel tabel;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
+
 }

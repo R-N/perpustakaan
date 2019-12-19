@@ -5,16 +5,25 @@
  */
 package perpustakaan.ui.forms;
 
+import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import perpustakaan.classes.Buku;
+import perpustakaan.ui.classes.IMainPanel;
+
 /**
  *
  * @author LENOVO
  */
-public class DaftarBukuPanel extends javax.swing.JPanel {
+public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
     /**
      * Creates new form DafarBukuPanel
      */
     MainPanel parent;
+    List<Buku> bukus;
+    TableModel model;
     
     public DaftarBukuPanel() {
         initComponents();
@@ -28,7 +37,62 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
     public void init(MainPanel parent){
         setParent(parent);
     }
+    
+    public void lihatBuku(){
+        int row = mainTable.getSelectedRow();
+        if(row < 0) return;
+        
+        Buku buku = bukus.get(row);
+        
+        parent.showBuku(buku);
+    }
+    
+    public void editBuku(){
+        int row = mainTable.getSelectedRow();
+        if(row < 0) return;
+        
+        Buku buku = bukus.get(row);
+        
+        parent.editBuku(buku);
+    }
 
+    @Override
+    public void refresh() {
+        
+        String[] cols = new String[]{
+            "Kode Buku",
+            "Judul Buku",
+            "Nama Penulis",
+            "Status Buku"
+        };
+        
+        bukus = Buku.fetchBuku();
+        Object[][] rows = new Object[bukus.size()][];
+        
+        int i = 0;
+        for(Buku buku : bukus){
+            rows[i++] = buku.toArrayDaftar();
+        }
+        model = new DefaultTableModel(rows, cols){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        mainTable.setModel(model);
+        
+    }
+
+    @Override
+    public void load(Object object) {
+        
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +107,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        mainTable = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
         hapusButton = new javax.swing.JButton();
         lihatButton = new javax.swing.JButton();
@@ -92,13 +156,9 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
         add(Header, gridBagConstraints);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        mainTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Kode Buku", "Judul Buku", "Nama Penulis", "Status Buku"
@@ -119,9 +179,9 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setMinimumSize(new java.awt.Dimension(0, 0));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        mainTable.setMinimumSize(new java.awt.Dimension(0, 0));
+        mainTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(mainTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -198,12 +258,12 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
 
     private void lihatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatButtonActionPerformed
         // TODO add your handling code here:
-        parent.showCard("detailbuku");
+        lihatBuku();
     }//GEN-LAST:event_lihatButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
-        parent.showCard("editbuku");
+        editBuku();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -220,7 +280,8 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton lihatButton;
+    private javax.swing.JTable mainTable;
     // End of variables declaration//GEN-END:variables
+
 }

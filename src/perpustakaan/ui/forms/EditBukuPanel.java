@@ -5,11 +5,14 @@
  */
 package perpustakaan.ui.forms;
 
+import javax.swing.JPanel;
+import perpustakaan.ui.classes.IMainPanel;
+
 /**
  *
  * @author LENOVO
  */
-public class EditBukuPanel extends javax.swing.JPanel {
+public class EditBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
     /**
      * Creates new form EditBukuPanel
@@ -26,6 +29,18 @@ public class EditBukuPanel extends javax.swing.JPanel {
 
     public void init(MainPanel parent){
         setParent(parent);
+    }
+    @Override
+    public void refresh() {
+    }
+
+    @Override
+    public void load(Object object) {
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,4 +296,5 @@ public class EditBukuPanel extends javax.swing.JPanel {
     private javax.swing.JButton simpanButton;
     private javax.swing.JPanel tabel;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -39,16 +39,21 @@ public class Peminjaman {
     }
     
     public Peminjaman(String kodeBuku, String namaPeminjam, String teleponPeminjam, String alamatPeminjam, String waktuTenggang) {
-        
+        this(namaPeminjam, teleponPeminjam, alamatPeminjam, waktuTenggang);
         this.kodeBuku = kodeBuku;
+    }
+    public Peminjaman(String namaPeminjam, String teleponPeminjam, String alamatPeminjam, String waktuTenggang) {
+        
         this.namaPeminjam = namaPeminjam;
         this.teleponPeminjam = teleponPeminjam;
+        this.alamatPeminjam = alamatPeminjam;
         this.waktuTenggang = waktuTenggang;
     }
     public static List<Peminjaman> fetchRiwayat(){
         try{
             PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali FROM peminjaman ORDER BY waktu_pinjam DESC"
+                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
+                            + "FROM peminjaman WHERE waktu_kembali IS NOT NULL ORDER BY waktu_pinjam DESC"
             );
             
             ResultSet rs = pstmt.executeQuery();
@@ -74,7 +79,8 @@ public class Peminjaman {
     public static List<Peminjaman> fetchPeminjaman(){
         try{
             PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali FROM peminjaman WHERE waktuKembali IS NULL ORDER BY waktu_pinjam DESC"
+                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
+                            + "FROM peminjaman WHERE waktuKembali IS NULL ORDER BY waktu_pinjam DESC"
             );
             
             ResultSet rs = pstmt.executeQuery();
@@ -96,6 +102,30 @@ public class Peminjaman {
             Util.handleException(ex);
             return null;
         }
+    }
+    
+    public boolean refresh(){
+        try{
+            PreparedStatement pstmt = Database.prepareStatement(
+                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali FROM peminjaman WHERE id_peminjaman=? ORDER BY waktu_pinjam DESC"
+            );
+            pstmt.setInt(1, idPeminjaman);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                idPeminjaman = rs.getInt(1);
+                kodeBuku = rs.getString(2);
+                namaPeminjam = rs.getString(3);
+                teleponPeminjam = rs.getString(4);
+                alamatPeminjam = rs.getString(5);
+                waktuPinjam = rs.getString(6);
+                waktuTenggang = rs.getString(7);
+                waktuKembali = rs.getString(8);
+                return true;
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+        return false;
     }
     public boolean insert(){
         try{
@@ -167,4 +197,22 @@ public class Peminjaman {
         }
     }    
    
+    public Object[] toArrayDaftar(){
+        return new Object[]{
+            kodeBuku,
+            idPeminjaman,
+            namaPeminjam,
+            waktuPinjam.split(" ")[0]
+        };
+    }
+    
+    public Object[] toArrayRiwayat(){
+        return new Object[]{
+            kodeBuku,
+            idPeminjaman,
+            namaPeminjam,
+            waktuPinjam.split(" ")[0],
+            waktuKembali.split(" ")[0]
+        };
+    }
 }

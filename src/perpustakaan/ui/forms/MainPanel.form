@@ -73,13 +73,6 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="perpustakaan.ui.forms.EditBukuPanel" name="editBukuPanel">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="editbuku"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="perpustakaan.ui.forms.RiwayatPeminjamanPanel" name="riwayatPeminjamanPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">

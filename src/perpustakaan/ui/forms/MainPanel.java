@@ -5,6 +5,11 @@
  */
 package perpustakaan.ui.forms;
 
+import java.util.HashMap;
+import java.util.Map;
+import perpustakaan.classes.Buku;
+import perpustakaan.ui.classes.IMainPanel;
+
 /**
  *
  * @author LENOVO
@@ -14,12 +19,15 @@ public class MainPanel extends javax.swing.JPanel {
     /**
      * Creates new form MainPanel
      */
+    Map<String, IMainPanel> panels = new HashMap<String, IMainPanel>();
+    
     public MainPanel() {
         initComponents();
     }
     
     public void init(MainFrame parent){
         init();
+        
     }
     
     String currentCard = null;
@@ -27,16 +35,31 @@ public class MainPanel extends javax.swing.JPanel {
     
     public void init(){
         sidebarPanel.init(this);
-        daftarBukuPanel.init(this);
-        daftarPeminjamanPanel.init(this);
-        detailBukuPanel.init(this);
-        editBukuPanel.init(this);
-        riwayatPeminjamanPanel.init(this);
-        tambahBukuPanel.init(this);
+        
+        panels.put("daftarbuku", daftarBukuPanel);
+        panels.put("daftarpeminjaman", daftarPeminjamanPanel);
+        panels.put("detailbuku", detailBukuPanel);
+        panels.put("riwayatpeminjaman", riwayatPeminjamanPanel);
+        panels.put("tambahbuku", tambahBukuPanel);
+        
+        for(IMainPanel panel : panels.values()){
+            panel.init(this);
+        }
+        
         showCard("daftarbuku");
     }
     
+    public void showBuku(Buku buku){
+        showCard("detailbuku");
+        detailBukuPanel.load(buku);
+    }
+    public void editBuku(Buku buku){
+        showCard("tambahbuku");
+        tambahBukuPanel.load(buku);
+    }
+    
     public void showCard(String card){
+        panels.get(card).refresh();
         previousCard = currentCard;
         currentCard = card;
         mainLayout.show(mainPanel, card);
@@ -67,7 +90,6 @@ public class MainPanel extends javax.swing.JPanel {
         daftarBukuPanel = new perpustakaan.ui.forms.DaftarBukuPanel();
         daftarPeminjamanPanel = new perpustakaan.ui.forms.DaftarPeminjamanPanel();
         detailBukuPanel = new perpustakaan.ui.forms.DetailBukuPanel();
-        editBukuPanel = new perpustakaan.ui.forms.EditBukuPanel();
         riwayatPeminjamanPanel = new perpustakaan.ui.forms.RiwayatPeminjamanPanel();
         tambahBukuPanel = new perpustakaan.ui.forms.TambahBukuPanel();
 
@@ -87,7 +109,6 @@ public class MainPanel extends javax.swing.JPanel {
         mainPanel.add(daftarBukuPanel, "daftarbuku");
         mainPanel.add(daftarPeminjamanPanel, "daftarpeminjaman");
         mainPanel.add(detailBukuPanel, "detailbuku");
-        mainPanel.add(editBukuPanel, "editbuku");
         mainPanel.add(riwayatPeminjamanPanel, "riwayatpeminjaman");
         mainPanel.add(tambahBukuPanel, "tambahbuku");
 
@@ -105,7 +126,6 @@ public class MainPanel extends javax.swing.JPanel {
     private perpustakaan.ui.forms.DaftarBukuPanel daftarBukuPanel;
     private perpustakaan.ui.forms.DaftarPeminjamanPanel daftarPeminjamanPanel;
     private perpustakaan.ui.forms.DetailBukuPanel detailBukuPanel;
-    private perpustakaan.ui.forms.EditBukuPanel editBukuPanel;
     private javax.swing.JPanel mainPanel;
     java.awt.CardLayout mainLayout;
     private perpustakaan.ui.forms.RiwayatPeminjamanPanel riwayatPeminjamanPanel;
