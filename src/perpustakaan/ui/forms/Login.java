@@ -5,6 +5,12 @@
  */
 package perpustakaan.ui.forms;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import perpustakaan.util.Util;
+import perpustakaan.util.database.Database;
+
 /**
  *
  * @author LENOVO
@@ -14,8 +20,99 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    private int mode;
+    
+    public static final int MODE_LOGIN = 1;
+    public static final int MODE_REGISTER = 0;
+    
+    public static String username = null;
+    
     public Login() {
         initComponents();
+        init();
+    }
+    
+    
+    public void init(){
+        try{
+            ResultSet rs = Database.executeQuery("SELECT COUNT(*) FROM `User`");
+            int count = 0;
+            if(rs == null){
+                throw new RuntimeException("RS NULL");
+            }
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+            if(count == 0){
+                mode = MODE_REGISTER;
+                loginButton.setText("SIMPAN");
+            }else{
+                mode = MODE_LOGIN;
+                loginButton.setText("LOGIN");
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void login(){
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        
+        
+        try{
+            PreparedStatement pstmt = Database.prepareStatement(
+                    "SELECT username FROM `User` WHERE username=? AND password=?"
+            );
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs == null){
+                throw new RuntimeException("RS NULL");
+            }
+            if(rs.next()){
+                Login.username = rs.getString(1);
+                onLoginSucceeded();
+            }else{
+                Util.showError("Username atau password salah", "Login Gagal");
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void register(){
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        try{
+            PreparedStatement pstmt = Database.prepareStatement(
+                    "INSERT INTO `User`(username, password) VALUES (?, ?)"
+            );
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            int result = pstmt.executeUpdate();
+            if(result > 0){
+                Login.username = username;
+                onLoginSucceeded();
+            }else{
+                Util.showError("Registrasi gagal", "Registrasi gagal");
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void onLoginSucceeded(){
+        Util.showMessage("Login berhasil", "Login berhasil");
+    }
+    
+    public void submit(){
+        
+        if(mode == MODE_LOGIN){
+            login();
+        }else{
+            register();
+        }
     }
 
     /**
@@ -37,10 +134,10 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -54,7 +151,6 @@ public class Login extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(546, 768));
@@ -135,11 +231,11 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel4.add(jLabel4, gridBagConstraints);
 
-        username.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        username.setToolTipText("username");
-        username.addActionListener(new java.awt.event.ActionListener() {
+        usernameField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        usernameField.setToolTipText("username");
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                usernameFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -150,7 +246,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.ipady = 25;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 30, 0);
-        jPanel4.add(username, gridBagConstraints);
+        jPanel4.add(usernameField, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(84, 88, 113));
@@ -162,8 +258,12 @@ public class Login extends javax.swing.JFrame {
         jPanel4.add(jLabel5, gridBagConstraints);
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        passwordField.setText("jPasswordField1");
         passwordField.setMinimumSize(new java.awt.Dimension(0, 0));
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -174,15 +274,15 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 30, 0);
         jPanel4.add(passwordField, gridBagConstraints);
 
-        btnLogin.setBackground(new java.awt.Color(84, 88, 113));
-        btnLogin.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(247, 236, 235));
-        btnLogin.setText("LOGIN");
-        btnLogin.setMaximumSize(new java.awt.Dimension(83, 33));
-        btnLogin.setPreferredSize(new java.awt.Dimension(105, 33));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setBackground(new java.awt.Color(84, 88, 113));
+        loginButton.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(247, 236, 235));
+        loginButton.setText("LOGIN");
+        loginButton.setMaximumSize(new java.awt.Dimension(83, 33));
+        loginButton.setPreferredSize(new java.awt.Dimension(105, 33));
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -192,7 +292,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel4.add(btnLogin, gridBagConstraints);
+        jPanel4.add(loginButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
@@ -211,13 +311,20 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+        submit();
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginActionPerformed
+        submit();
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+        submit();
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,7 +362,6 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
     private perpustakaan.ui.classes.ImageLabel imageLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -266,7 +372,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JTextField username;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
