@@ -7,10 +7,13 @@ package perpustakaan.classes;
 
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 import perpustakaan.util.Util;
 
@@ -22,85 +25,131 @@ public class Buku {
     public String kodeBuku;
     public String judulBuku;
     public String penulisBuku;
-    public int statusBuku;
+    public Integer statusBuku;
     
     public Buku(String kodeBuku, String judulBuku, String penulisBuku){
         this.kodeBuku = kodeBuku;
         this.judulBuku = judulBuku;
         this.penulisBuku = penulisBuku;
     }
+    public Buku(String kodeBuku, String judulBuku, String penulisBuku, int statusBuku){
+        this(kodeBuku, judulBuku, penulisBuku);
+        this.statusBuku = statusBuku;
+    }
     
-    public boolean cariBuku(){
+    public static List<Buku> fetchBuku(String search){
         try{
-            java.sql.PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT * FROM buku WHERE kode_buku = %?% OR judul_buku = %?% OR penulis_buku = %?%"
+            PreparedStatement pstmt = Database.prepareStatement(
+                    "SELECT kode_buku, judul_buku, penulis_buku, status_buku FROM buku ORDER BY kode_buku ASC"
             );
             
-            pstmt.setString(1, kodeBuku);
-            pstmt.setString(2, judulBuku);
-            pstmt.setString(3, penulisBuku);
-            return pstmt.execute();
+            ResultSet rs =  pstmt.executeQuery();
+            
+            List<Buku> ret = new ArrayList<Buku>();
+            while(rs.next()){
+                ret.add(new Buku(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4)
+                ));
+            }
+            return ret;
         }catch (SQLException ex){
             Util.handleException(ex);
-            return false;
+            return null;
         }
     }
     
-    public boolean tampilBuku(){
+    public static Buku getBuku(String kodeBuku){
         try{
             java.sql.PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT kode_buku, judul_buku, nama_penulis, status_buku FROM buku WHERE kode_buku = ?"
+                    "SELECT kode_buku, judul_buku, penulis_buku, status_buku FROM buku WHERE kode_buku = ?"
             );
             
             pstmt.setString(1, kodeBuku);
-            return pstmt.execute();
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if(rs.next()){
+                return new Buku(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4)
+                );
+            }
+            
         }catch (SQLException ex){
             Util.handleException(ex);
-            return false;
+        }
+        return null;
+    }
+    
+    public Peminjaman getPeminjaman(){
+        
+        try{
+            PreparedStatement pstmt = Database.prepareStatement(
+                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
+                            + "FROM peminjaman WHERE waktuKembali IS NULL AND kode_buku = ? ORDER BY waktu_pinjam DESC"
+            );
+            
+            pstmt.setString(1, kodeBuku);
+            
+            ResultSet rs = pstmt.executeQuery();
+            List<Peminjaman> ret = new ArrayList<Peminjaman>();
+            if(rs.next()){
+                return new Peminjaman(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8)
+                );
+            }
+            return null;
+        }catch(SQLException ex){
+            Util.handleException(ex);
+            return null;
         }
     }
     
     public boolean pinjam(Peminjaman peminjaman){
+        if(statusBuku == null){
+            return false;
+        }
         try{
             java.sql.PreparedStatement pstmt = Database.prepareStatement(
-                    "UPDATE buku SET status_buku = ? WHERE kode_buku = ?"
+                    "UPDATE buku SET status_buku = 1 WHERE kode_buku = ? AND status_buku = 0"
                     
             );
-            pstmt.setInt(1, 1);
-            pstmt.setString(2, kodeBuku);
+            pstmt.setString(1, kodeBuku);
             
-            java.sql.PreparedStatement pstmt2 = Database.prepareStatement(
-                    "UPDATE peminjaman SET kode_buku = ? WHERE id_peminjaman = ?"
-            );
-            Integer idPeminjaman = peminjaman.idPeminjaman;
-            pstmt2.setString(1, kodeBuku);
-            pstmt2.setInt(2, idPeminjaman);
+            if(pstmt.executeUpdate() <= 0){
+                if(this.statusBuku == 1) 
+                    this.statusBuku = 0;
+                return false;
+            }
             
+            peminjaman.kodeBuku = this.kodeBuku;
             
-            return pstmt.executeUpdate() == 0;
+            boolean ret = peminjaman.insert();
+            
+            if(ret){
+                Database.commit();
+            }else{
+                if(this.statusBuku == 1) 
+                    this.statusBuku = 0;
+                Database.rollback();
+            }
+            return ret;
         }catch(SQLException ex){
             Util.handleException(ex);
             return false;
         }    
-    }
-    
-    public boolean kembalikan(Peminjaman peminjaman){
-        try{
-            java.sql.PreparedStatement pstmt = Database.prepareStatement(
-                    "UPDATE peminjaman SET kode_buku = ? WHERE id_peminjaman = ? AND waktu_kembali = NULL"
-            );
-            Integer idPeminjaman = peminjaman.idPeminjaman;
-            String waktuKembali = peminjaman.waktuKembali;
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar waktu = Calendar.getInstance();
-            waktuKembali =  dateFormat.format(waktu.getTime());
-            pstmt.setString(1, kodeBuku);
-            pstmt.setInt(2, idPeminjaman);
-            return pstmt.executeUpdate() == 0;
-        }catch(SQLException ex){
-            Util.handleException(ex);
-            return false;
-        }
     }
     
     public boolean insert(){
@@ -111,7 +160,14 @@ public class Buku {
             pstmt.setString(1, kodeBuku);
             pstmt.setString(2, judulBuku);
             pstmt.setString(3, penulisBuku);
-            return pstmt.executeUpdate() == 0;
+            boolean ret = pstmt.executeUpdate() > 0;
+            if(ret){
+                this.statusBuku = 1;
+                Database.commit();
+            }else{
+                Database.rollback();
+            }
+            return ret;
         }catch(SQLException ex){
             Util.handleException(ex);
             return false;
@@ -119,6 +175,9 @@ public class Buku {
     }
     
     public boolean update(){
+        if(statusBuku == null){
+            return false;
+        }
         try{
             java.sql.PreparedStatement pstmt = Database.prepareStatement(
                     "UPDATE buku SET judul_buku = ?,"
@@ -129,24 +188,36 @@ public class Buku {
             pstmt.setString(1, judulBuku);
             pstmt.setString(2, penulisBuku);
             pstmt.setString(3, kodeBuku);
-            return pstmt.executeUpdate() == 0;
+            boolean ret = pstmt.executeUpdate() > 0;
+            if(ret){
+                Database.commit();
+            }else{
+                Database.rollback();
+            }
+            return ret;
         }catch(SQLException ex){
             Util.handleException(ex);
             return false;
         }    
     }
     
-    void delete(){
+    public boolean delete(){
         try{
             java.sql.PreparedStatement pstmt = Database.prepareStatement(
                     "DELETE FROM buku WHERE kode_buku = ?"              
             );
 
             pstmt.setString(1, kodeBuku);
-            pstmt.executeUpdate();
+            boolean ret = pstmt.executeUpdate() > 0;
+            if(ret){
+                Database.commit();
+            }else{
+                Database.rollback();
+            }
+            return ret;
         }catch(SQLException ex){
             Util.handleException(ex);
-            
-}
+            return false;
+        }
     }
 }

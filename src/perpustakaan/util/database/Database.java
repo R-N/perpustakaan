@@ -67,6 +67,16 @@ public class Database {
         }
     }
     
+    public static boolean rollback() {
+        try{
+            getInstance().conn.rollback();
+            return true;
+        }catch (SQLException ex){
+            Util.handleException(ex);
+            return false;
+        }
+    }
+    
     public boolean open(String url) {
         try {
             Util.log("Connecting...");
@@ -74,7 +84,7 @@ public class Database {
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             instance = this;
-            //setAutoCommit(false);
+            setAutoCommit(false);
             Util.log("Connected");
             return true;
         } catch (SQLException ex) {

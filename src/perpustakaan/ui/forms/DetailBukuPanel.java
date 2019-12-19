@@ -115,10 +115,10 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         tabelkiri.add(jLabel1, gridBagConstraints);
 
-        jButton1.setBackground(new java.awt.Color(84, 88, 113));
-        jButton1.setForeground(new java.awt.Color(247, 236, 235));
-        jButton1.setText("Pinjam Buku");
-        jButton1.setMinimumSize(new java.awt.Dimension(0, 0));
+        btnPinjam.setBackground(new java.awt.Color(84, 88, 113));
+        btnPinjam.setForeground(new java.awt.Color(247, 236, 235));
+        btnPinjam.setText("Pinjam Buku");
+        btnPinjam.setMinimumSize(new java.awt.Dimension(0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -126,7 +126,7 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        tabelkiri.add(jButton1, gridBagConstraints);
+        tabelkiri.add(btnPinjam, gridBagConstraints);
 		
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -309,7 +309,6 @@ public class DetailBukuPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnPinjam;
     private javax.swing.JPanel headerKiri;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
