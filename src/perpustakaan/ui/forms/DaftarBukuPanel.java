@@ -219,6 +219,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         hapusButton.setBackground(new java.awt.Color(240, 241, 247));
         hapusButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         hapusButton.setForeground(new java.awt.Color(84, 88, 113));
+        hapusButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/delete.png"))); // NOI18N
         hapusButton.setText("Hapus");
         hapusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,6 +235,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         lihatButton.setBackground(new java.awt.Color(240, 241, 247));
         lihatButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         lihatButton.setForeground(new java.awt.Color(84, 88, 113));
+        lihatButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/show.png"))); // NOI18N
         lihatButton.setText("Lihat");
         lihatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,6 +253,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         editButton.setBackground(new java.awt.Color(240, 241, 247));
         editButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         editButton.setForeground(new java.awt.Color(84, 88, 113));
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/edit.png"))); // NOI18N
         editButton.setText("Sunting");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

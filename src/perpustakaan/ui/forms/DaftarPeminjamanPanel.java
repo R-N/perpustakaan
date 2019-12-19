@@ -165,6 +165,7 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
 
         lihatButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         lihatButton.setForeground(new java.awt.Color(84, 88, 113));
+        lihatButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/show.png"))); // NOI18N
         lihatButton.setText("Lihat");
         lihatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
