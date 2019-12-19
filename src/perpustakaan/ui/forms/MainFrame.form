@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JPanel" name="jPanel5">
 
@@ -40,12 +40,34 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
   <SubComponents>
-    <Component class="perpustakaan.ui.forms.LoginPanel" name="loginPanel">
+    <Container class="javax.swing.JPanel" name="rootPanel">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private java.awt.CardLayout rootLayout;"/>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="rootLayout = new java.awt.CardLayout();&#xa;rootPanel.setLayout(rootLayout);"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="card2"/>
+          <CardConstraints cardName="card4"/>
         </Constraint>
       </Constraints>
-    </Component>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+      <SubComponents>
+        <Component class="perpustakaan.ui.forms.LoginPanel" name="loginPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="login"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="perpustakaan.ui.forms.MainPanel" name="mainPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="main"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

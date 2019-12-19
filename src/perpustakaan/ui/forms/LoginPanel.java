@@ -23,11 +23,22 @@ public class LoginPanel extends javax.swing.JPanel {
     public static final int MODE_LOGIN = 1;
     public static final int MODE_REGISTER = 0;
     
+    public MainFrame parent;
+    
     /**
      * Creates new form LoginPanel
      */
     public LoginPanel() {
         initComponents();
+    }
+    
+    public void init(MainFrame parent){
+        setParent(parent);
+        init();
+    }
+    
+    public void setParent(MainFrame parent){
+        this.parent = parent;
     }
 
     public void init(){
@@ -85,7 +96,7 @@ public class LoginPanel extends javax.swing.JPanel {
     }
     
     public void onLoginSucceeded(){
-        Util.showMessage("Login berhasil", "Login berhasil");
+        parent.showCard("main");
     }
     
     public void submit(){

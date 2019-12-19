@@ -21,12 +21,20 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form Login
      */
     
+    
     public MainFrame() {
         initComponents();
     }
     
     public void init(){
-        loginPanel.init();
+        loginPanel.init(this);
+        mainPanel.init(this);
+        
+        showCard("login");
+    }
+    
+    public void showCard(String card){
+        rootLayout.show(rootPanel, card);
     }
 
     /**
@@ -40,7 +48,9 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel5 = new javax.swing.JPanel();
+        rootPanel = new javax.swing.JPanel();
         loginPanel = new perpustakaan.ui.forms.LoginPanel();
+        mainPanel = new perpustakaan.ui.forms.MainPanel();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -55,7 +65,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
-        getContentPane().add(loginPanel, "card2");
+
+        rootPanel.setLayout(new java.awt.CardLayout());
+        rootLayout = new java.awt.CardLayout();
+        rootPanel.setLayout(rootLayout);
+        rootPanel.add(loginPanel, "login");
+        rootPanel.add(mainPanel, "main");
+
+        getContentPane().add(rootPanel, "card4");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -101,5 +118,8 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel5;
     private perpustakaan.ui.forms.LoginPanel loginPanel;
+    private perpustakaan.ui.forms.MainPanel mainPanel;
+    private javax.swing.JPanel rootPanel;
+    private java.awt.CardLayout rootLayout;
     // End of variables declaration//GEN-END:variables
 }

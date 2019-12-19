@@ -9,14 +9,13 @@ package perpustakaan.ui.forms;
  *
  * @author LENOVO
  */
-public class DetailBukuFrame extends javax.swing.JFrame {
+public class DetailBukuPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form Login
+     * Creates new form DetailBukuPanel
      */
-    public DetailBukuFrame() {
+    public DetailBukuPanel() {
         initComponents();
-        //sidebarBg.setImage("background.png");
     }
 
     /**
@@ -29,8 +28,6 @@ public class DetailBukuFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sidebar1 = new perpustakaan.ui.forms.SidebarPanel();
-        panelKiri = new javax.swing.JPanel();
         headerKiri = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -48,18 +45,8 @@ public class DetailBukuFrame extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.3;
-        getContentPane().add(sidebar1, gridBagConstraints);
-
-        panelKiri.setBackground(new java.awt.Color(247, 236, 235));
-        panelKiri.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 30));
-        panelKiri.setMinimumSize(new java.awt.Dimension(0, 0));
-        panelKiri.setPreferredSize(new java.awt.Dimension(820, 768));
-        panelKiri.setLayout(new java.awt.GridBagLayout());
+        setOpaque(false);
+        setLayout(new java.awt.GridBagLayout());
 
         headerKiri.setOpaque(false);
         headerKiri.setLayout(new java.awt.GridBagLayout());
@@ -93,7 +80,7 @@ public class DetailBukuFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
-        panelKiri.add(headerKiri, gridBagConstraints);
+        add(headerKiri, gridBagConstraints);
 
         tabel.setBackground(new java.awt.Color(255, 255, 255));
         tabel.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -221,36 +208,9 @@ public class DetailBukuFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weighty = 1.0;
-        panelKiri.add(tabel, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(panelKiri, gridBagConstraints);
-
-        pack();
+        add(tabel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultsidebarollapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DetailBukuFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel headerKiri;
@@ -266,8 +226,6 @@ public class DetailBukuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel panelKiri;
-    private perpustakaan.ui.forms.SidebarPanel sidebar1;
     private javax.swing.JPanel tabel;
     private javax.swing.JPanel tabelkanan;
     private javax.swing.JPanel tabelkiri;

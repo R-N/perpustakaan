@@ -9,14 +9,13 @@ package perpustakaan.ui.forms;
  *
  * @author LENOVO
  */
-public class DaftarBukuFrame extends javax.swing.JFrame {
+public class DaftarBukuPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form Login
+     * Creates new form DafarBukuPanel
      */
-    public DaftarBukuFrame() {
+    public DaftarBukuPanel() {
         initComponents();
-        //sidebarBg.setImage("background.png");
     }
 
     /**
@@ -29,8 +28,6 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sidebar1 = new perpustakaan.ui.forms.SidebarPanel();
-        panelKiri = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -41,18 +38,8 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
         BtnLihat = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.3;
-        getContentPane().add(sidebar1, gridBagConstraints);
-
-        panelKiri.setBackground(new java.awt.Color(247, 236, 235));
-        panelKiri.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 30));
-        panelKiri.setMinimumSize(new java.awt.Dimension(0, 0));
-        panelKiri.setPreferredSize(new java.awt.Dimension(820, 768));
-        panelKiri.setLayout(new java.awt.GridBagLayout());
+        setOpaque(false);
+        setLayout(new java.awt.GridBagLayout());
 
         Header.setOpaque(false);
         Header.setLayout(new java.awt.GridBagLayout());
@@ -87,7 +74,7 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
-        panelKiri.add(Header, gridBagConstraints);
+        add(Header, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,15 +106,14 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
         jTable1.setMinimumSize(new java.awt.Dimension(0, 0));
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panelKiri.add(jScrollPane1, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(jScrollPane1, gridBagConstraints);
 
         Footer.setOpaque(false);
         Footer.setLayout(new java.awt.GridBagLayout());
@@ -184,17 +170,7 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 10.0;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
-        panelKiri.add(Footer, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(panelKiri, gridBagConstraints);
-
-        pack();
+        add(Footer, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -209,23 +185,6 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DaftarBukuFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnLihat;
@@ -237,7 +196,5 @@ public class DaftarBukuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPanel panelKiri;
-    private perpustakaan.ui.forms.SidebarPanel sidebar1;
     // End of variables declaration//GEN-END:variables
 }
