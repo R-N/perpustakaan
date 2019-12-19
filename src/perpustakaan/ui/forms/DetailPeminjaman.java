@@ -9,12 +9,12 @@ package perpustakaan.ui.forms;
  *
  * @author LENOVO
  */
-public class DetailBukuPanel extends javax.swing.JPanel {
+public class DetailPeminjaman extends javax.swing.JPanel {
 
     /**
      * Creates new form DetailBukuPanel
      */
-    public DetailBukuPanel() {
+    public DetailPeminjaman() {
         initComponents();
     }
 
@@ -43,22 +43,20 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         tabel = new javax.swing.JPanel();
         tabelkiri = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnPinjam = new javax.swing.JButton();
+        btnSudahKembali = new javax.swing.JButton();
         tabelkanan = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         kodeBuku = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        judulBuku = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        namaPenulis = new javax.swing.JLabel();
+        kodePinjam = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldNama = new javax.swing.JTextField();
-        jTextFieldNomer = new javax.swing.JTextField();
-        jTextFieldAlamat = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        namaPeminjam = new javax.swing.JLabel();
+        nomerPeminjam = new javax.swing.JLabel();
+        alamatPeminjam = new javax.swing.JLabel();
+        tgl = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(0, 0));
         setOpaque(false);
@@ -69,7 +67,7 @@ public class DetailBukuPanel extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Source Sans Pro Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(40, 38, 78));
-        jLabel4.setText("My Book / Detail Buku");
+        jLabel4.setText("Daftar Peminjaman / Detail Peminjaman");
         jLabel4.setMinimumSize(new java.awt.Dimension(0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -113,16 +111,18 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 20);
         tabelkiri.add(jLabel1, gridBagConstraints);
 
-        btnPinjam.setText("Pinjam Buku");
-        btnPinjam.setMinimumSize(new java.awt.Dimension(0, 0));
+        btnSudahKembali.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        btnSudahKembali.setText("Sudah Kembali");
+        btnSudahKembali.setMinimumSize(new java.awt.Dimension(0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 10);
-        tabelkiri.add(btnPinjam, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 5, 10);
+        tabelkiri.add(btnSudahKembali, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -156,7 +156,7 @@ public class DetailBukuPanel extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel6.setText("Judul Buku");
+        jLabel6.setText("Kode Peminjaman");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -165,38 +165,16 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
         tabelkanan.add(jLabel6, gridBagConstraints);
 
-        judulBuku.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        judulBuku.setForeground(new java.awt.Color(84, 88, 113));
-        judulBuku.setText("jdlBuku");
+        kodePinjam.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        kodePinjam.setForeground(new java.awt.Color(84, 88, 113));
+        kodePinjam.setText("kdpinjam");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(judulBuku, gridBagConstraints);
-
-        jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel8.setText("Nama Penulis Buku");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(jLabel8, gridBagConstraints);
-
-        namaPenulis.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        namaPenulis.setForeground(new java.awt.Color(84, 88, 113));
-        namaPenulis.setText("nmPenulis");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(namaPenulis, gridBagConstraints);
+        tabelkanan.add(kodePinjam, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(84, 88, 113));
@@ -242,46 +220,49 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
         tabelkanan.add(jLabel13, gridBagConstraints);
 
-        jTextFieldNama.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        namaPeminjam.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        namaPeminjam.setForeground(new java.awt.Color(84, 88, 113));
+        namaPeminjam.setText("nama");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(jTextFieldNama, gridBagConstraints);
+        tabelkanan.add(namaPeminjam, gridBagConstraints);
 
-        jTextFieldNomer.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        nomerPeminjam.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        nomerPeminjam.setForeground(new java.awt.Color(84, 88, 113));
+        nomerPeminjam.setText("nomer");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(jTextFieldNomer, gridBagConstraints);
+        tabelkanan.add(nomerPeminjam, gridBagConstraints);
 
-        jTextFieldAlamat.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        alamatPeminjam.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        alamatPeminjam.setForeground(new java.awt.Color(84, 88, 113));
+        alamatPeminjam.setText("alamat");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(jTextFieldAlamat, gridBagConstraints);
+        tabelkanan.add(alamatPeminjam, gridBagConstraints);
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
+        tgl.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        tgl.setForeground(new java.awt.Color(84, 88, 113));
+        tgl.setText("tgl");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 13;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
-        tabelkanan.add(jFormattedTextField1, gridBagConstraints);
+        tabelkanan.add(tgl, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -303,16 +284,12 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         parent.showCard("daftarbuku");
     }//GEN-LAST:event_btnKembaliActionPerformed
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alamatPeminjam;
     private javax.swing.JButton btnKembali;
-    private javax.swing.JButton btnPinjam;
+    private javax.swing.JButton btnSudahKembali;
     private javax.swing.JPanel headerKiri;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -321,15 +298,13 @@ public class DetailBukuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextFieldAlamat;
-    private javax.swing.JTextField jTextFieldNama;
-    private javax.swing.JTextField jTextFieldNomer;
-    private javax.swing.JLabel judulBuku;
     private javax.swing.JLabel kodeBuku;
-    private javax.swing.JLabel namaPenulis;
+    private javax.swing.JLabel kodePinjam;
+    private javax.swing.JLabel namaPeminjam;
+    private javax.swing.JLabel nomerPeminjam;
     private javax.swing.JPanel tabel;
     private javax.swing.JPanel tabelkanan;
     private javax.swing.JPanel tabelkiri;
+    private javax.swing.JLabel tgl;
     // End of variables declaration//GEN-END:variables
 }
