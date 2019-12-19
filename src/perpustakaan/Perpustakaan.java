@@ -5,6 +5,17 @@
  */
 package perpustakaan;
 
+<<<<<<< HEAD
+import classes.Peminjaman;
+import java.sql.Date;
+import perpustakaan.util.database.Database;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+=======
 import com.formdev.flatlaf.FlatLightLaf;
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
@@ -12,8 +23,9 @@ import java.sql.SQLException;
 import javax.swing.UIManager;
 import perpustakaan.ui.forms.MainFrame;
 import perpustakaan.util.Config;
+>>>>>>> a10e513bac6ec3de467e3192546c4cf5ec5c4493
 import perpustakaan.util.Util;
-
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +38,19 @@ public class Perpustakaan {
      */
     public static void main(String[] args) {
         
+        try{
+            java.sql.PreparedStatement pstmt = Database.prepareStatement(
+                    "UPDATE peminjaman SET waktu_kembali = ? WHERE id_peminjaman = ? AND waktu_kembali = null"
+            );
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Calendar waktu = Calendar.getInstance();
+            
+            pstmt.setString(1, dateFormat.format(waktu.getTime()));
+            pstmt.setInt(2, 938300);
+            pstmt.executeUpdate();
+            
+        }catch(SQLException ex){
+		}
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -35,6 +60,8 @@ public class Perpustakaan {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             Util.handleException(ex);
+            
+            //JOptionPane.showMessageDialog(null, "Kode buku yang diinputkan sudah ada!", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
         //</editor-fold>
         Config.init();

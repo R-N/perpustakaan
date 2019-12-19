@@ -39,7 +39,7 @@ public class DetailBukuPanel extends javax.swing.JPanel {
 
         headerKiri = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btnKembali = new javax.swing.JButton();
+        kembaliButton = new javax.swing.JButton();
         tabel = new javax.swing.JPanel();
         tabelkiri = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -80,17 +80,17 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         headerKiri.add(jLabel4, gridBagConstraints);
 
-        btnKembali.setBackground(new java.awt.Color(218, 219, 230));
-        btnKembali.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        btnKembali.setForeground(new java.awt.Color(85, 89, 114));
-        btnKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/kembali.png"))); // NOI18N
-        btnKembali.setText("Kembali");
-        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+        kembaliButton.setBackground(new java.awt.Color(218, 219, 230));
+        kembaliButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        kembaliButton.setForeground(new java.awt.Color(85, 89, 114));
+        kembaliButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/kembali.png"))); // NOI18N
+        kembaliButton.setText("Kembali");
+        kembaliButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKembaliActionPerformed(evt);
+                kembaliButtonActionPerformed(evt);
             }
         });
-        headerKiri.add(btnKembali, new java.awt.GridBagConstraints());
+        headerKiri.add(kembaliButton, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -113,20 +113,25 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
         tabelkiri.add(jLabel1, gridBagConstraints);
 
-        btnPinjam.setText("Pinjam Buku");
-        btnPinjam.setMinimumSize(new java.awt.Dimension(0, 0));
+        jButton1.setBackground(new java.awt.Color(84, 88, 113));
+        jButton1.setForeground(new java.awt.Color(247, 236, 235));
+        jButton1.setText("Pinjam Buku");
+        jButton1.setMinimumSize(new java.awt.Dimension(0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 10);
-        tabelkiri.add(btnPinjam, gridBagConstraints);
-
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        tabelkiri.add(jButton1, gridBagConstraints);
+		
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 0);
         tabel.add(tabelkiri, gridBagConstraints);
 
         tabelkanan.setBackground(new java.awt.Color(255, 255, 255));
@@ -270,11 +275,6 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         tabelkanan.add(jTextFieldAlamat, gridBagConstraints);
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 13;
@@ -298,14 +298,10 @@ public class DetailBukuPanel extends javax.swing.JPanel {
         add(tabel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+    private void kembaliButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliButtonActionPerformed
         // TODO add your handling code here:
-        parent.showCard("daftarbuku");
-    }//GEN-LAST:event_btnKembaliActionPerformed
-
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+        parent.previousCard();
+    }//GEN-LAST:event_kembaliButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -313,6 +309,7 @@ public class DetailBukuPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnPinjam;
     private javax.swing.JPanel headerKiri;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -328,6 +325,8 @@ public class DetailBukuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel judulBuku;
     private javax.swing.JLabel kodeBuku;
     private javax.swing.JLabel namaPenulis;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton kembaliButton;
     private javax.swing.JPanel tabel;
     private javax.swing.JPanel tabelkanan;
     private javax.swing.JPanel tabelkiri;

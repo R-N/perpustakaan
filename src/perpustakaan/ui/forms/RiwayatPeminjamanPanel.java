@@ -42,7 +42,7 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
-        BtnLihat = new javax.swing.JButton();
+        lihatButton = new javax.swing.JButton();
 
         setOpaque(false);
         setLayout(new java.awt.GridBagLayout());
@@ -113,12 +113,12 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel {
         Footer.setOpaque(false);
         Footer.setLayout(new java.awt.GridBagLayout());
 
-        BtnLihat.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        BtnLihat.setForeground(new java.awt.Color(84, 88, 113));
-        BtnLihat.setText("Lihat");
-        BtnLihat.addActionListener(new java.awt.event.ActionListener() {
+        lihatButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        lihatButton.setForeground(new java.awt.Color(84, 88, 113));
+        lihatButton.setText("Lihat");
+        lihatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnLihatActionPerformed(evt);
+                lihatButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -127,7 +127,7 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        Footer.add(BtnLihat, gridBagConstraints);
+        Footer.add(lihatButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -139,17 +139,18 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel {
         add(Footer, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnLihatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLihatActionPerformed
+    private void lihatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnLihatActionPerformed
+        parent.showCard("detailbuku");
+    }//GEN-LAST:event_lihatButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnLihat;
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton lihatButton;
     // End of variables declaration//GEN-END:variables
 }
