@@ -18,6 +18,15 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    MainPanel parent;
+    public void setParent(MainPanel parent){
+        this.parent = parent;
+        
+    }
+
+    public void init(MainPanel parent){
+        setParent(parent);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

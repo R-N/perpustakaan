@@ -14,8 +14,19 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
     /**
      * Creates new form DafarBukuPanel
      */
+    MainPanel parent;
+    
     public DaftarBukuPanel() {
         initComponents();
+    }
+    
+    public void setParent(MainPanel parent){
+        this.parent = parent;
+        
+    }
+
+    public void init(MainPanel parent){
+        setParent(parent);
     }
 
     /**
@@ -30,13 +41,13 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
 
         Header = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
-        btnHapus = new javax.swing.JButton();
-        BtnLihat = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        hapusButton = new javax.swing.JButton();
+        lihatButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
 
         setOpaque(false);
         setLayout(new java.awt.GridBagLayout());
@@ -53,20 +64,25 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         Header.add(jLabel4, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/add1.png"))); // NOI18N
-        jLabel2.setText("Tambah Buku");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel2.setMinimumSize(new java.awt.Dimension(0, 0));
-        jLabel2.setOpaque(true);
+        jButton1.setBackground(new java.awt.Color(218, 219, 230));
+        jButton1.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(84, 88, 113));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/add1.png"))); // NOI18N
+        jButton1.setText("Tambah Buku");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 10;
-        Header.add(jLabel2, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        Header.add(jButton1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -118,26 +134,28 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         Footer.setOpaque(false);
         Footer.setLayout(new java.awt.GridBagLayout());
 
-        btnHapus.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        btnHapus.setForeground(new java.awt.Color(84, 88, 113));
-        btnHapus.setText("Hapus");
-        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+        hapusButton.setBackground(new java.awt.Color(240, 241, 247));
+        hapusButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        hapusButton.setForeground(new java.awt.Color(84, 88, 113));
+        hapusButton.setText("Hapus");
+        hapusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHapusActionPerformed(evt);
+                hapusButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        Footer.add(btnHapus, gridBagConstraints);
+        Footer.add(hapusButton, gridBagConstraints);
 
-        BtnLihat.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        BtnLihat.setForeground(new java.awt.Color(84, 88, 113));
-        BtnLihat.setText("Lihat");
-        BtnLihat.addActionListener(new java.awt.event.ActionListener() {
+        lihatButton.setBackground(new java.awt.Color(240, 241, 247));
+        lihatButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        lihatButton.setForeground(new java.awt.Color(84, 88, 113));
+        lihatButton.setText("Lihat");
+        lihatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnLihatActionPerformed(evt);
+                lihatButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -146,14 +164,15 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        Footer.add(BtnLihat, gridBagConstraints);
+        Footer.add(lihatButton, gridBagConstraints);
 
-        btnEdit.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(84, 88, 113));
-        btnEdit.setText("Sunting");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setBackground(new java.awt.Color(240, 241, 247));
+        editButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        editButton.setForeground(new java.awt.Color(84, 88, 113));
+        editButton.setText("Sunting");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                editButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -161,7 +180,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        Footer.add(btnEdit, gridBagConstraints);
+        Footer.add(editButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -173,28 +192,35 @@ public class DaftarBukuPanel extends javax.swing.JPanel {
         add(Footer, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+    private void hapusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHapusActionPerformed
+    }//GEN-LAST:event_hapusButtonActionPerformed
 
-    private void BtnLihatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLihatActionPerformed
+    private void lihatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnLihatActionPerformed
+        parent.showCard("detailbuku");
+    }//GEN-LAST:event_lihatButtonActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
+        parent.showCard("editbuku");
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        parent.showCard("tambahbuku");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnLihat;
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnHapus;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton editButton;
+    private javax.swing.JButton hapusButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton lihatButton;
     // End of variables declaration//GEN-END:variables
 }

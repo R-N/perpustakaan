@@ -24,6 +24,12 @@ public class MainPanel extends javax.swing.JPanel {
     
     public void init(){
         sidebarPanel.init(this);
+        daftarBukuPanel.init(this);
+        daftarPeminjamanPanel.init(this);
+        detailBukuPanel.init(this);
+        editBukuPanel.init(this);
+        riwayatPeminjamanPanel.init(this);
+        tambahBukuPanel.init(this);
     }
     
     public void showCard(String card){

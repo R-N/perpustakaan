@@ -18,6 +18,15 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    MainPanel parent;
+    public void setParent(MainPanel parent){
+        this.parent = parent;
+        
+    }
+
+    public void init(MainPanel parent){
+        setParent(parent);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,8 +49,8 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         Footer = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        btnSImpan = new javax.swing.JButton();
+        batalButton = new javax.swing.JButton();
+        simpanButton = new javax.swing.JButton();
 
         setOpaque(false);
         setLayout(new java.awt.GridBagLayout());
@@ -125,8 +134,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         tabel.add(jLabel10, gridBagConstraints);
 
         jTextField1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(247, 236, 235));
-        jTextField1.setText("Masukkan Kode Buku");
+        jTextField1.setForeground(new java.awt.Color(84, 88, 113));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -141,8 +149,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         tabel.add(jTextField1, gridBagConstraints);
 
         jTextField2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(247, 236, 235));
-        jTextField2.setText("Masukkan Judul Buku");
+        jTextField2.setForeground(new java.awt.Color(84, 88, 113));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -157,8 +164,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         tabel.add(jTextField2, gridBagConstraints);
 
         jTextField3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(247, 236, 235));
-        jTextField3.setText("Masukkan Nama penulis Buku");
+        jTextField3.setForeground(new java.awt.Color(84, 88, 113));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -194,12 +200,12 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         Footer.setOpaque(false);
         Footer.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(84, 88, 113));
-        jButton1.setText("Batal");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        batalButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        batalButton.setForeground(new java.awt.Color(84, 88, 113));
+        batalButton.setText("Batal");
+        batalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                batalButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -207,22 +213,22 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        Footer.add(jButton1, gridBagConstraints);
+        Footer.add(batalButton, gridBagConstraints);
 
-        btnSImpan.setBackground(new java.awt.Color(84, 88, 113));
-        btnSImpan.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        btnSImpan.setForeground(new java.awt.Color(204, 204, 204));
-        btnSImpan.setText("Simpan Buku");
-        btnSImpan.addActionListener(new java.awt.event.ActionListener() {
+        simpanButton.setBackground(new java.awt.Color(84, 88, 113));
+        simpanButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        simpanButton.setForeground(new java.awt.Color(204, 204, 204));
+        simpanButton.setText("Simpan Buku");
+        simpanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSImpanActionPerformed(evt);
+                simpanButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        Footer.add(btnSImpan, gridBagConstraints);
+        Footer.add(simpanButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -245,20 +251,21 @@ public class TambahBukuPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void batalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        parent.showCard("daftarbuku");
+    }//GEN-LAST:event_batalButtonActionPerformed
 
-    private void btnSImpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSImpanActionPerformed
+    private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnSImpanActionPerformed
+        parent.showCard("daftarbuku");
+    }//GEN-LAST:event_simpanButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
-    private javax.swing.JButton btnSImpan;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton batalButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -268,6 +275,7 @@ public class TambahBukuPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton simpanButton;
     private javax.swing.JPanel tabel;
     // End of variables declaration//GEN-END:variables
 }
