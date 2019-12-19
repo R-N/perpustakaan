@@ -5,7 +5,7 @@
  */
 package perpustakaan;
 
-<<<<<<< HEAD
+
 import classes.Peminjaman;
 import java.sql.Date;
 import perpustakaan.util.database.Database;
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-=======
+
 import com.formdev.flatlaf.FlatLightLaf;
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import javax.swing.UIManager;
 import perpustakaan.ui.forms.MainFrame;
 import perpustakaan.util.Config;
->>>>>>> a10e513bac6ec3de467e3192546c4cf5ec5c4493
+
 import perpustakaan.util.Util;
 import javax.swing.JOptionPane;
 
