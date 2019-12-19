@@ -8,6 +8,7 @@ package perpustakaan.ui.forms;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import perpustakaan.classes.LoginManager;
 import perpustakaan.util.Util;
 import perpustakaan.util.database.Database;
 
@@ -15,40 +16,26 @@ import perpustakaan.util.database.Database;
  *
  * @author LENOVO
  */
-public class Login extends javax.swing.JFrame {
+public class LoginPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Login
-     */
     private int mode;
     
     public static final int MODE_LOGIN = 1;
     public static final int MODE_REGISTER = 0;
     
-    public static String username = null;
-    
-    public static final String SALT = "areng";
-    
-    public Login() {
+    /**
+     * Creates new form LoginPanel
+     */
+    public LoginPanel() {
         initComponents();
-        init();
     }
-    
-    
+
     public void init(){
         try{
-            ResultSet rs = Database.executeQuery("SELECT COUNT(*) FROM `User`");
-            int count = 0;
-            if(rs == null){
-                throw new RuntimeException("RS NULL");
-            }
-            if(rs.next()){
-                count = rs.getInt(1);
-            }
-            if(count == 0){
-                setMode(MODE_REGISTER);
-            }else{
+            if(LoginManager.hasAccount()){
                 setMode(MODE_LOGIN);
+            }else{
+                setMode(MODE_REGISTER);
             }
         }catch(SQLException ex){
             Util.handleException(ex);
@@ -66,27 +53,13 @@ public class Login extends javax.swing.JFrame {
         this.mode = mode;
     }
     
-    public String readPassword(){
-        return Util.md5(passwordField.getText() + SALT);
-    }
-    
     public void login(){
         String username = usernameField.getText();
-        String password = readPassword();
+        String password = passwordField.getText();
         
         
         try{
-            PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT username FROM `User` WHERE username=? AND password=?"
-            );
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            if(rs == null){
-                throw new RuntimeException("RS NULL");
-            }
-            if(rs.next()){
-                Login.username = rs.getString(1);
+            if(LoginManager.login(username, password)){
                 onLoginSucceeded();
             }else{
                 Util.showError("Username atau password salah", "Login Gagal");
@@ -98,17 +71,9 @@ public class Login extends javax.swing.JFrame {
     
     public void register(){
         String username = usernameField.getText();
-        String password = readPassword();
+        String password = passwordField.getText();
         try{
-            PreparedStatement pstmt = Database.prepareStatement(
-                    "INSERT INTO `User`(username, password) VALUES (?, ?)"
-            );
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            
-            int result = pstmt.executeUpdate();
-            if(result > 0){
-                Login.username = username;
+            if(LoginManager.register(username, password)){
                 setMode(MODE_LOGIN);
                 onLoginSucceeded();
             }else{
@@ -131,7 +96,6 @@ public class Login extends javax.swing.JFrame {
             register();
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,7 +106,6 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         imageLabel1 = new perpustakaan.ui.classes.ImageLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -156,19 +119,7 @@ public class Login extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(546, 768));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -185,7 +136,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel1, gridBagConstraints);
+        add(jPanel1, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(247, 236, 235));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
@@ -323,9 +274,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.6;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel2, gridBagConstraints);
-
-        pack();
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
@@ -333,50 +282,16 @@ public class Login extends javax.swing.JFrame {
         submit();
     }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        submit();
-    }//GEN-LAST:event_loginButtonActionPerformed
-
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
         submit();
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+        submit();
+    }//GEN-LAST:event_loginButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private perpustakaan.ui.classes.ImageLabel imageLabel1;
@@ -388,7 +303,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField usernameField;

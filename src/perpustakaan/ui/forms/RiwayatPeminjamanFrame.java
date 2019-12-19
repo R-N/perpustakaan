@@ -9,12 +9,12 @@ package perpustakaan.ui.forms;
  *
  * @author LENOVO
  */
-public class RiwayatPeminjaman extends javax.swing.JFrame {
+public class RiwayatPeminjamanFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public RiwayatPeminjaman() {
+    public RiwayatPeminjamanFrame() {
         initComponents();
         //sidebarBg.setImage("background.png");
     }
@@ -29,7 +29,7 @@ public class RiwayatPeminjaman extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sidebar1 = new perpustakaan.ui.forms.sidebar();
+        sidebar1 = new perpustakaan.ui.forms.SidebarPanel();
         panelKiri = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -171,7 +171,7 @@ public class RiwayatPeminjaman extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RiwayatPeminjaman().setVisible(true);
+                new RiwayatPeminjamanFrame().setVisible(true);
             }
         });
     }
@@ -184,6 +184,6 @@ public class RiwayatPeminjaman extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelKiri;
-    private perpustakaan.ui.forms.sidebar sidebar1;
+    private perpustakaan.ui.forms.SidebarPanel sidebar1;
     // End of variables declaration//GEN-END:variables
 }

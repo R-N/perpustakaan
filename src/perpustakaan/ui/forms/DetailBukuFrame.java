@@ -9,12 +9,12 @@ package perpustakaan.ui.forms;
  *
  * @author LENOVO
  */
-public class DetailBuku extends javax.swing.JFrame {
+public class DetailBukuFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public DetailBuku() {
+    public DetailBukuFrame() {
         initComponents();
         //sidebarBg.setImage("background.png");
     }
@@ -29,7 +29,7 @@ public class DetailBuku extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sidebar1 = new perpustakaan.ui.forms.sidebar();
+        sidebar1 = new perpustakaan.ui.forms.SidebarPanel();
         panelKiri = new javax.swing.JPanel();
         headerKiri = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -49,7 +49,6 @@ public class DetailBuku extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(0, 0));
         getContentPane().setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -248,7 +247,7 @@ public class DetailBuku extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailBuku().setVisible(true);
+                new DetailBukuFrame().setVisible(true);
             }
         });
     }
@@ -268,7 +267,7 @@ public class DetailBuku extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panelKiri;
-    private perpustakaan.ui.forms.sidebar sidebar1;
+    private perpustakaan.ui.forms.SidebarPanel sidebar1;
     private javax.swing.JPanel tabel;
     private javax.swing.JPanel tabelkanan;
     private javax.swing.JPanel tabelkiri;

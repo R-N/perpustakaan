@@ -11,12 +11,12 @@ import perpustakaan.ui.classes.ImagePanel;
  *
  * @author nick
  */
-public class sidebar extends ImagePanel {
+public class SidebarPanel extends ImagePanel {
 
     /**
      * Creates new form sidebar
      */
-    public sidebar() {
+    public SidebarPanel() {
         initComponents();
         setImage("background.png");
     }

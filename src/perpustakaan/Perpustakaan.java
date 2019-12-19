@@ -10,7 +10,7 @@ import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.UIManager;
-import perpustakaan.ui.forms.Login;
+import perpustakaan.ui.forms.MainFrame;
 import perpustakaan.util.Config;
 import perpustakaan.util.Util;
 
@@ -34,7 +34,7 @@ public class Perpustakaan {
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Util.handleException(ex);
         }
         //</editor-fold>
         Config.init();
@@ -42,7 +42,8 @@ public class Perpustakaan {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Login frame = new Login();
+                MainFrame frame = new MainFrame();
+                frame.init();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
