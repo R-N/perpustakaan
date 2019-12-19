@@ -5,6 +5,12 @@
  */
 package perpustakaan.classes;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import perpustakaan.util.Util;
 
@@ -49,6 +57,82 @@ public class Buku {
                 &&  (statusBuku == buku.statusBuku || (statusBuku != null && statusBuku.equals(buku.statusBuku)))
                 ;
                 
+    }
+    
+    public String findCoverFileName(){
+        return findCoverFileName(kodeBuku);
+    }
+    public String findCoverPath(){
+        return findCoverPath(kodeBuku);
+    }
+    public Path findCoverPathPath(){
+        return findCoverPathPath(kodeBuku);
+    }
+    public File findCoverFile(){
+        return findCoverFile(kodeBuku);
+    }
+    public URL findCoverURL(){
+        return findCoverURL(kodeBuku);
+    }
+    public ImageIcon findCoverImageIcon(){
+        return findCoverImageIcon(kodeBuku);
+    }
+    
+    public static String findCoverFileName(String kodeBuku){
+        //https://stackoverflow.com/questions/17697646/how-to-detect-if-a-filewith-any-extension-exist-in-java
+        File folder = new File("covers/");
+        File[] listOfFiles = folder.listFiles();
+
+        String[] exts = ImageIO.getReaderFileSuffixes();
+        for (File file : listOfFiles)
+        {
+            if (file.isFile())
+            {
+                String[] filename = Util.splitFileName(file.getName());//file.getName().split("\\.(?=[^\\.]+$)"); //split filename from it's extension
+                if(filename.length < 2) continue;
+                if(filename[0].equals(kodeBuku)){ //matching defined filename
+                    for(String ext : exts){
+                        if(ext.equalsIgnoreCase(filename[1]))
+                            return filename[0] + "." + filename[1];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    public static String findCoverPath(String kodeBuku){
+        String name = findCoverFileName(kodeBuku);
+        if(name == null) return null;
+        return "covers/" + name;
+    }
+    
+    public static Path findCoverPathPath(String kodeBuku){
+        String path = findCoverPath(kodeBuku);
+        if(path == null) return null;
+        return Paths.get(path);
+    }
+    public static File findCoverFile(String kodeBuku){
+        String path = findCoverPath(kodeBuku);
+        if(path == null) return null;
+        return new File(path);
+    }
+    
+    public static URL findCoverURL(String kodeBuku){
+        String path = findCoverPath(kodeBuku);
+        if(path == null) return null;
+        File file = new File(path);
+        try {
+            return file.toURI().toURL();
+        } catch (final MalformedURLException e1) {
+            return null;
+        }
+    }
+    
+    public static ImageIcon findCoverImageIcon(String kodeBuku){
+        URL url = findCoverURL(kodeBuku);
+        if(url == null) return null;
+        return new ImageIcon(url);
     }
     
     public Buku read(Buku buku){

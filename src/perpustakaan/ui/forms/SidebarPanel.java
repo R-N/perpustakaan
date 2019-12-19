@@ -67,6 +67,7 @@ public class SidebarPanel extends ImagePanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 1;
+        gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
         add(jLabel1, gridBagConstraints);
 
         jPanel1.setOpaque(false);
@@ -75,7 +76,7 @@ public class SidebarPanel extends ImagePanel {
         myBookButton.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
         myBookButton.setForeground(new java.awt.Color(240, 230, 240));
         myBookButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
-        myBookButton.setText("My Book");
+        myBookButton.setText("  My Book");
         myBookButton.setAlignmentX(0.5F);
         myBookButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -91,8 +92,8 @@ public class SidebarPanel extends ImagePanel {
 
         daftarPeminjamanButton.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
         daftarPeminjamanButton.setForeground(new java.awt.Color(240, 230, 240));
-        daftarPeminjamanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
-        daftarPeminjamanButton.setText("Daftar Peminjaman");
+        daftarPeminjamanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/daftar pinjam.png"))); // NOI18N
+        daftarPeminjamanButton.setText("  Daftar Peminjaman");
         daftarPeminjamanButton.setAlignmentX(0.5F);
         daftarPeminjamanButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -108,8 +109,8 @@ public class SidebarPanel extends ImagePanel {
 
         riwayatPeminjamanButton.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
         riwayatPeminjamanButton.setForeground(new java.awt.Color(240, 230, 240));
-        riwayatPeminjamanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/my book.png"))); // NOI18N
-        riwayatPeminjamanButton.setText("Riwayat Peminjaman");
+        riwayatPeminjamanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/riwayat.png"))); // NOI18N
+        riwayatPeminjamanButton.setText("  Riwayat Peminjaman");
         riwayatPeminjamanButton.setAlignmentX(0.5F);
         riwayatPeminjamanButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

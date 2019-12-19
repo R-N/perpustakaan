@@ -42,7 +42,8 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
             "Kode Buku",
             "Kode Peminjaman",
             "Nama Peminjam",
-            "Tanggal Pinjam"
+            "Tanggal Pinjam",
+            "Masa Tenggang"
         };
         
         peminjamans = Peminjaman.fetchPeminjaman();
@@ -123,6 +124,7 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
         add(Header, gridBagConstraints);
 
+        mainTable.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         mainTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

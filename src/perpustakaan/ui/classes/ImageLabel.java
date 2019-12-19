@@ -30,7 +30,7 @@ public class ImageLabel extends JLabel{
     public static final int FIT_WIDTH = 1;
     public static final int FIT_HEIGHT = 2;
     
-    public String path = "/zakat/ui/images/";
+    public String path = "/perpustakaan/ui/gambar/";
     
     private Image image;
     private javax.swing.SwingWorker worker;
@@ -38,6 +38,10 @@ public class ImageLabel extends JLabel{
     private int mode = FIT_BOTH;
     public ImageLabel(){
         this(FIT_BOTH);
+    }
+    
+    public void setPath(String path){
+        this.path = path;
     }
     
     public ImageLabel(int mode){

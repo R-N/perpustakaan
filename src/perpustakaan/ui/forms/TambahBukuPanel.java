@@ -5,9 +5,18 @@
  */
 package perpustakaan.ui.forms;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.swing.JPanel;
+import javax.swing.text.AbstractDocument;
 import perpustakaan.classes.Buku;
 import perpustakaan.ui.classes.IMainPanel;
+import perpustakaan.ui.classes.LimitDocumentFilter;
+import perpustakaan.util.Util;
 
 /**
  *
@@ -20,9 +29,13 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
      */
     
     Buku buku = null;
+    File cover = null;
     
     public TambahBukuPanel() {
         initComponents();
+        ((AbstractDocument)kodeBukuField.getDocument()).setDocumentFilter(new LimitDocumentFilter(6));
+        ((AbstractDocument)judulBukuField.getDocument()).setDocumentFilter(new LimitDocumentFilter(50));
+        ((AbstractDocument)penulisBukuField.getDocument()).setDocumentFilter(new LimitDocumentFilter(50));
     }
     
     
@@ -51,6 +64,7 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
             judulBukuField.setText("");
             penulisBukuField.setText("");
             titleLabel.setText("My Book / Tambah Buku");
+            coverButton.setText("Upload a photo");
             return;
         }
         if(object instanceof Buku){
@@ -60,9 +74,25 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
             judulBukuField.setText(buku.judulBuku);
             penulisBukuField.setText(buku.penulisBuku);
             titleLabel.setText("My Book / Edit Buku");
+            String cover = buku.findCoverFileName();
+            if(cover == null){
+                coverButton.setText("Upload a photo");
+            }else{
+                coverButton.setText(cover);
+            }
         }
     }
 
+    public void pilihCover(){
+        File f = Util.getImagePath();
+        if(f == null) return;
+        if(this.cover != null){
+            
+        }
+        this.cover = f;
+        coverButton.setText(cover.getName());
+    }
+    
     @Override
     public JPanel getPanel() {
         return this;
@@ -70,8 +100,20 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
     
     public Buku read(){
         String judulBuku = judulBukuField.getText();
+        if(Util.isNullOrEmpty(judulBuku)){
+            Util.showError("Judul tidak boleh kosong", "Error");
+            return null;
+        }
         String penulisBuku = penulisBukuField.getText();
+        if(Util.isNullOrEmpty(penulisBuku)){
+            Util.showError("Penulis tidak boleh kosong", "Error");
+            return null;
+        }
         String kodeBuku = kodeBukuField.getText();
+        if(Util.isNullOrEmpty(kodeBuku)){
+            Util.showError("Kode Buku tidak boleh kosong", "Error");
+            return null;
+        }
 
         Buku buku1 = new Buku(
                 kodeBuku,
@@ -87,13 +129,46 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
     public boolean tambahBuku(){
         Buku buku = read();
         
-        return buku.insert();
+        if(buku == null) return false;
+        
+        boolean ret = buku.insert();
+        
+        if(ret){
+            copyCover(buku);
+        }
+        
+        return ret;
     }
     
     public boolean updateBuku(){
         Buku buku1 = read();
-        if (buku.equals(buku1)) return true;
-        return buku1.update();
+        if(buku1 == null) return false;
+        if (buku.equals(buku1)){
+            copyCover(buku);
+            return true;
+        }
+        boolean ret = buku1.update();
+        
+        if(ret){
+            copyCover(buku1);
+        }
+        
+        return ret;
+    }
+    
+    public void copyCover(Buku buku){
+        if(cover == null) return;
+        try{
+            Path newPath = cover.toPath();
+            Path oldPath = buku.findCoverPathPath();
+            if(oldPath != null){
+                Files.delete(oldPath);
+            }
+            Path copied = Paths.get("covers/" + buku.kodeBuku + "." + Util.splitFileName(newPath.getFileName().toString())[1]);
+            Files.copy(newPath, copied, StandardCopyOption.REPLACE_EXISTING);
+        }catch(IOException ex){
+            Util.handleException(ex);
+        }
     }
     
     public boolean simpanBuku(){
@@ -123,7 +198,7 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
         kodeBukuField = new javax.swing.JTextField();
         judulBukuField = new javax.swing.JTextField();
         penulisBukuField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        coverButton = new javax.swing.JLabel();
         Footer = new javax.swing.JPanel();
         batalButton = new javax.swing.JButton();
         simpanButton = new javax.swing.JButton();
@@ -254,15 +329,20 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
         tabel.add(penulisBukuField, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(114, 100, 139));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/upload.png"))); // NOI18N
-        jLabel1.setText(" Upload a photo");
+        coverButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        coverButton.setForeground(new java.awt.Color(114, 100, 139));
+        coverButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/upload.png"))); // NOI18N
+        coverButton.setText(" Upload a photo");
+        coverButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                coverButtonMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        tabel.add(jLabel1, gridBagConstraints);
+        tabel.add(coverButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -341,12 +421,17 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
         }
     }//GEN-LAST:event_simpanButtonActionPerformed
 
+    private void coverButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_coverButtonMouseClicked
+        // TODO add your handling code here:
+        pilihCover();
+    }//GEN-LAST:event_coverButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
     private javax.swing.JButton batalButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel coverButton;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

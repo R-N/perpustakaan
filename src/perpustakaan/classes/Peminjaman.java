@@ -218,7 +218,8 @@ public class Peminjaman {
             kodeBuku,
             idPeminjaman,
             namaPeminjam,
-            waktuPinjam.split(" ")[0]
+            waktuPinjam.split(" ")[0],
+            waktuTenggang.split(" ")[0]
         };
     }
     

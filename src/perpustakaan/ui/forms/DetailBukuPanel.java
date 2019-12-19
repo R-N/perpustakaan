@@ -5,10 +5,17 @@
  */
 package perpustakaan.ui.forms;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.text.AbstractDocument;
 import perpustakaan.classes.Buku;
 import perpustakaan.classes.Peminjaman;
 import perpustakaan.ui.classes.IMainPanel;
+import perpustakaan.ui.classes.LimitDocumentFilter;
 import perpustakaan.util.Util;
 
 /**
@@ -25,6 +32,10 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
     
     public DetailBukuPanel() {
         initComponents();
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        ((AbstractDocument)namaPeminjamField.getDocument()).setDocumentFilter(new LimitDocumentFilter(50));
+        ((AbstractDocument)teleponPeminjamField.getDocument()).setDocumentFilter(new LimitDocumentFilter(15));
+        ((AbstractDocument)alamatPeminjamField.getDocument()).setDocumentFilter(new LimitDocumentFilter(255));
     }
 
     MainPanel parent;
@@ -50,6 +61,12 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
             penulisBukuLabel.setText(buku.penulisBuku);
             statusBukuLabel.setText(buku.getStatusString());
             pinjamButton.setVisible(buku.statusBuku == 0);
+            ImageIcon coverIcon = buku.findCoverImageIcon();
+            if(coverIcon == null){
+                coverLabel.setIcon("cover.png");
+            }else{
+                coverLabel.setIcon(coverIcon);
+            }
             showPeminjaman(false);
         }
     }
@@ -66,10 +83,21 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
             return false;
         }
         String namaPeminjam = namaPeminjamField.getText();
+        if(Util.isNullOrEmpty(namaPeminjam)){
+            Util.showError("Nama Peminjam tidak boleh kosong", "Error");
+            return false;
+        }
         String teleponPeminjam = teleponPeminjamField.getText();
+        if(Util.isNullOrEmpty(teleponPeminjam)){
+            Util.showError("Nomor Telepon Peminjam tidak boleh kosong", "Error");
+            return false;
+        }
         String alamatPeminjam = alamatPeminjamField.getText();
+        if(Util.isNullOrEmpty(alamatPeminjam)){
+            Util.showError("Alamat Peminjam tidak boleh kosong", "Error");
+            return false;
+        }
         
-        System.out.println(waktuTenggangRaw.toString());
         String[] waktuTenggangRaw1 = waktuTenggangField.getText().split("/");
         
         String waktuTenggang = String.format("%s/%s/%s 23:59:00", 
@@ -130,18 +158,22 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         kembaliButton = new javax.swing.JButton();
         tabel = new javax.swing.JPanel();
         tabelkiri = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        coverLabel = new perpustakaan.ui.classes.ImageLabel();
         pinjamButton = new javax.swing.JButton();
         tabelKanan = new javax.swing.JPanel();
         detailPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         kodeBukuLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         judulBukuLabel = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         penulisBukuLabel = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         statusBukuLabel = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
         scrollPane = new javax.swing.JScrollPane();
         tabelKananScroll = new javax.swing.JPanel();
         peminjamanPanel = new javax.swing.JPanel();
@@ -204,12 +236,13 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         tabelkiri.setBackground(new java.awt.Color(255, 255, 255));
         tabelkiri.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/cover.png"))); // NOI18N
+        coverLabel.setMinimumSize(new java.awt.Dimension(199, 290));
+        coverLabel.setPreferredSize(new java.awt.Dimension(199, 290));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
-        tabelkiri.add(jLabel1, gridBagConstraints);
+        tabelkiri.add(coverLabel, gridBagConstraints);
 
         pinjamButton.setBackground(new java.awt.Color(84, 88, 113));
         pinjamButton.setForeground(new java.awt.Color(247, 236, 235));
@@ -222,14 +255,15 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         tabelkiri.add(pinjamButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
         tabel.add(tabelkiri, gridBagConstraints);
@@ -249,7 +283,6 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
         detailPanel.add(jLabel3, gridBagConstraints);
         jLabel3.getAccessibleContext().setAccessibleName("");
 
@@ -261,9 +294,17 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 15, 0);
         detailPanel.add(kodeBukuLabel, gridBagConstraints);
         kodeBukuLabel.getAccessibleContext().setAccessibleName("");
+
+        jSeparator1.setBackground(new java.awt.Color(243, 237, 237));
+        jSeparator1.setForeground(new java.awt.Color(243, 237, 237));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        detailPanel.add(jSeparator1, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(84, 88, 113));
@@ -273,7 +314,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         detailPanel.add(jLabel6, gridBagConstraints);
         jLabel6.getAccessibleContext().setAccessibleName("");
 
@@ -285,9 +326,17 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 15, 0);
         detailPanel.add(judulBukuLabel, gridBagConstraints);
         judulBukuLabel.getAccessibleContext().setAccessibleName("");
+
+        jSeparator2.setBackground(new java.awt.Color(243, 237, 237));
+        jSeparator2.setForeground(new java.awt.Color(243, 237, 237));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        detailPanel.add(jSeparator2, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(84, 88, 113));
@@ -297,7 +346,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         detailPanel.add(jLabel8, gridBagConstraints);
         jLabel8.getAccessibleContext().setAccessibleName("");
 
@@ -309,9 +358,17 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 15, 0);
         detailPanel.add(penulisBukuLabel, gridBagConstraints);
         penulisBukuLabel.getAccessibleContext().setAccessibleName("");
+
+        jSeparator3.setBackground(new java.awt.Color(243, 237, 237));
+        jSeparator3.setForeground(new java.awt.Color(243, 237, 237));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        detailPanel.add(jSeparator3, gridBagConstraints);
 
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(84, 88, 113));
@@ -321,7 +378,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         detailPanel.add(jLabel9, gridBagConstraints);
         jLabel9.getAccessibleContext().setAccessibleName("");
 
@@ -333,9 +390,17 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 15, 0);
         detailPanel.add(statusBukuLabel, gridBagConstraints);
         statusBukuLabel.getAccessibleContext().setAccessibleName("");
+
+        jSeparator4.setBackground(new java.awt.Color(243, 237, 237));
+        jSeparator4.setForeground(new java.awt.Color(243, 237, 237));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        detailPanel.add(jSeparator4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -350,7 +415,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.7;
         gridBagConstraints.weighty = 1.0;
         tabel.add(tabelKanan, gridBagConstraints);
 
@@ -418,7 +483,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
         jLabel13.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(84, 88, 113));
-        jLabel13.setText("Masa Tenggang Peminjaman");
+        jLabel13.setText("Masa Tenggang Peminjaman (dd/mm/yyyy)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -448,7 +513,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.7;
         gridBagConstraints.weighty = 1.0;
         tabel.add(scrollPane, gridBagConstraints);
 
@@ -489,10 +554,10 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamatPeminjamField;
+    private perpustakaan.ui.classes.ImageLabel coverLabel;
     private javax.swing.JPanel detailPanel;
     private java.awt.GridBagConstraints gridBagDetail;
     private javax.swing.JPanel headerKiri;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -501,6 +566,10 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel judulBukuLabel;
     private javax.swing.JButton kembaliButton;
     private javax.swing.JLabel kodeBukuLabel;

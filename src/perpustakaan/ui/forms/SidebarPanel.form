@@ -41,7 +41,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="0" gridY="-1" gridWidth="1" gridHeight="1" fill="1" ipadX="1" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+          <GridBagConstraints gridX="0" gridY="-1" gridWidth="1" gridHeight="1" fill="1" ipadX="1" ipadY="0" insetsTop="30" insetsLeft="0" insetsBottom="30" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -68,7 +68,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/perpustakaan/ui/gambar/icon/my book.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="My Book"/>
+            <Property name="text" type="java.lang.String" value="  My Book"/>
             <Property name="alignmentX" type="float" value="0.5"/>
           </Properties>
           <Events>
@@ -89,9 +89,9 @@
               <Color blue="f0" green="e6" red="f0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/perpustakaan/ui/gambar/icon/my book.png"/>
+              <Image iconType="3" name="/perpustakaan/ui/gambar/icon/daftar pinjam.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Daftar Peminjaman"/>
+            <Property name="text" type="java.lang.String" value="  Daftar Peminjaman"/>
             <Property name="alignmentX" type="float" value="0.5"/>
           </Properties>
           <Events>
@@ -112,9 +112,9 @@
               <Color blue="f0" green="e6" red="f0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/perpustakaan/ui/gambar/icon/my book.png"/>
+              <Image iconType="3" name="/perpustakaan/ui/gambar/icon/riwayat.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Riwayat Peminjaman"/>
+            <Property name="text" type="java.lang.String" value="  Riwayat Peminjaman"/>
             <Property name="alignmentX" type="float" value="0.5"/>
           </Properties>
           <Events>

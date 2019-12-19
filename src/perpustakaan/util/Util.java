@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 /**
  *
@@ -287,30 +288,25 @@ public class Util {
         int conf = JOptionPane.showConfirmDialog(null, content, title, JOptionPane.YES_NO_OPTION);
         return conf == JOptionPane.YES_OPTION;
     }
-    public static File getExportCSVPath(){
+    public static File getImagePath(){
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("E-Faktur csv", "csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(null);
+        int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             File f = chooser.getSelectedFile();
-            try{
-                if (f.exists()){
-                    if (askConfirmation("Do you want to replace?", "File exists")){
-                        f.delete();
-                        f.createNewFile();
-                    }else{
-                        return getExportCSVPath();
-                    }
-                }else{
-                    f.createNewFile();
-                }
+            if (f.exists()){
                 return f;
-            }catch(IOException ex){
-                handleException(ex);
+            }else{
+                showError("File tidak ditemukan", "Error");
+                return getImagePath();
             }
         }
         return null;
+    }
+    
+    public static String[] splitFileName(String name){
+        return name.split("\\.(?=[^\\.]+$)"); //split filename from it's extension
     }
     
     public static String md5(String source){
