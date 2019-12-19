@@ -51,7 +51,7 @@ public class SidebarPanel extends ImagePanel {
         myBookButton = new javax.swing.JLabel();
         daftarPeminjamanButton = new javax.swing.JLabel();
         riwayatPeminjamanButton = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setMinimumSize(new java.awt.Dimension(0, 0));
@@ -130,17 +130,22 @@ public class SidebarPanel extends ImagePanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 0);
         add(jPanel1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/Logout.png"))); // NOI18N
-        jLabel2.setMinimumSize(new java.awt.Dimension(0, 0));
+        logoutButton.setFont(new java.awt.Font("Source Sans Pro", 1, 24)); // NOI18N
+        logoutButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/Logout.png"))); // NOI18N
+        logoutButton.setMinimumSize(new java.awt.Dimension(0, 0));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-        add(jLabel2, gridBagConstraints);
+        add(logoutButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void daftarPeminjamanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_daftarPeminjamanButtonMouseClicked
@@ -158,12 +163,17 @@ public class SidebarPanel extends ImagePanel {
         select("riwayatpeminjaman");
     }//GEN-LAST:event_riwayatPeminjamanButtonMouseClicked
 
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        parent.logout();
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel daftarPeminjamanButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logoutButton;
     private javax.swing.JLabel myBookButton;
     private javax.swing.JLabel riwayatPeminjamanButton;
     // End of variables declaration//GEN-END:variables

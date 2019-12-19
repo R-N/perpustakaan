@@ -25,6 +25,10 @@ public class LoginManager {
         return Util.md5(pass + SALT);
     }
     
+    public static void logout(){
+        username = null;
+    }
+    
     public static boolean hasAccount() throws SQLException{
         try{
             ResultSet rs = Database.executeQuery("SELECT COUNT(*) FROM `User`");

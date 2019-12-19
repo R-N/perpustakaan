@@ -37,6 +37,20 @@ public class Buku {
         this.statusBuku = statusBuku;
     }
     
+    public boolean equals(Object obj){
+        if(obj == null) return false;
+        if(obj == this) return true;
+        if (!(obj instanceof Buku)) return false;
+        Buku buku = (Buku) obj;
+        return 
+                (kodeBuku == buku.kodeBuku || (kodeBuku != null && kodeBuku.equals(buku.kodeBuku)))
+                && (judulBuku == buku.judulBuku || (judulBuku != null && judulBuku.equals(buku.judulBuku)))
+                && (penulisBuku == buku.penulisBuku || (penulisBuku != null && penulisBuku.equals(buku.penulisBuku)))
+                &&  (statusBuku == buku.statusBuku || (statusBuku != null && statusBuku.equals(buku.statusBuku)))
+                ;
+                
+    }
+    
     public Buku read(Buku buku){
         return read(buku, false);
     }

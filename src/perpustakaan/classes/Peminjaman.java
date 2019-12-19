@@ -22,14 +22,14 @@ import java.util.List;
  * @author ARION
  */
 public class Peminjaman {
-    Integer idPeminjaman;
-    String kodeBuku;
-    String namaPeminjam;
-    String teleponPeminjam;
-    String alamatPeminjam;
-    String waktuPinjam;
-    String waktuTenggang;
-    String waktuKembali;
+    public Integer idPeminjaman;
+    public String kodeBuku;
+    public String namaPeminjam;
+    public String teleponPeminjam;
+    public String alamatPeminjam;
+    public String waktuPinjam;
+    public String waktuTenggang;
+    public String waktuKembali;
     
     public Peminjaman(Integer idPeminjaman, String kodeBuku, String namaPeminjam, String teleponPeminjam, String alamatPeminjam, String waktuPinjam, String waktuTenggang, String waktuKembali) {
         this(kodeBuku, namaPeminjam, teleponPeminjam, alamatPeminjam, waktuTenggang);
@@ -76,11 +76,14 @@ public class Peminjaman {
             return null;
         }
     }
+    public Buku getBuku(){
+        return Buku.getBuku(kodeBuku);
+    }
     public static List<Peminjaman> fetchPeminjaman(){
         try{
             PreparedStatement pstmt = Database.prepareStatement(
                     "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
-                            + "FROM peminjaman WHERE waktuKembali IS NULL ORDER BY waktu_pinjam DESC"
+                            + "FROM peminjaman WHERE waktu_kembali IS NULL ORDER BY waktu_pinjam DESC"
             );
             
             ResultSet rs = pstmt.executeQuery();
@@ -165,7 +168,7 @@ public class Peminjaman {
     public boolean kembalikan(){
         try{
             PreparedStatement pstmt = Database.prepareStatement(
-                    "UPDATE peminjaman SET waktu_kembali = ? WHERE id_peminjaman = ? AND waktu_kembali = null"
+                    "UPDATE peminjaman SET waktu_kembali = ? WHERE id_peminjaman = ? AND waktu_kembali IS NULL"
             );
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar waktu = Calendar.getInstance();
@@ -176,7 +179,7 @@ public class Peminjaman {
             
             if(!ret){
                 Database.rollback();
-                return false;
+                throw new SQLException("Gagal update waktu pengembalian " + idPeminjaman + " " + waktuKembali);
             }
             
             pstmt = Database.prepareStatement(
@@ -185,10 +188,23 @@ public class Peminjaman {
             pstmt.setString(1, kodeBuku);
             ret = pstmt.executeUpdate() > 0;
             
+            if(!ret){
+                pstmt = Database.prepareStatement(
+                        "SELECT COUNT(*) FROM BUKU WHERE kode_buku=?"
+                );
+                pstmt.setString(1, kodeBuku);
+                ResultSet rs = pstmt.executeQuery();
+                rs.next();
+                if(rs.getInt(1) == 0){
+                    ret = true;
+                }
+            }
+            
             if(ret){
                 Database.commit();
             }else{
                 Database.rollback();
+                throw new SQLException("Gagal update status buku");
             }
             return ret;
         }catch(SQLException ex){

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import perpustakaan.classes.Buku;
 import perpustakaan.ui.classes.IMainPanel;
+import perpustakaan.util.Util;
 
 /**
  *
@@ -54,6 +55,26 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         Buku buku = bukus.get(row);
         
         parent.editBuku(buku);
+    }
+    public void hapusBuku(){
+        int row = mainTable.getSelectedRow();
+        if(row < 0) return;
+        
+        Buku buku = bukus.get(row);
+        
+        if(Util.askConfirmation(
+                String.format(
+                        "Apa Anda yakin ingin menghapus buku %s: %s oleh %s?",
+                        buku.kodeBuku,
+                        buku.judulBuku,
+                        buku.penulisBuku
+                ), "Hapus Buku")){
+            if(buku.delete()){
+                refresh();
+            }else{
+                
+            }
+        }
     }
 
     @Override
@@ -254,6 +275,7 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
 
     private void hapusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusButtonActionPerformed
         // TODO add your handling code here:
+        hapusBuku();
     }//GEN-LAST:event_hapusButtonActionPerformed
 
     private void lihatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatButtonActionPerformed

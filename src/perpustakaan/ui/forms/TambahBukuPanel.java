@@ -92,7 +92,7 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
     
     public boolean updateBuku(){
         Buku buku1 = read();
-        
+        if (buku.equals(buku1)) return true;
         return buku1.update();
     }
     

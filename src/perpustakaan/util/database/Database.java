@@ -96,8 +96,8 @@ public class Database {
     public static PreparedStatement prepareStatement(String sql){
         try{
             return getInstance().conn.prepareStatement(
-                            sql, 
-                            java.sql.PreparedStatement.RETURN_GENERATED_KEYS
+                    sql, 
+                    java.sql.PreparedStatement.RETURN_GENERATED_KEYS
             );
         }catch(java.sql.SQLException ex){
             throw new RuntimeException(ex);

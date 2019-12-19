@@ -5,7 +5,11 @@
  */
 package perpustakaan.ui.forms;
 
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import perpustakaan.classes.Peminjaman;
 import perpustakaan.ui.classes.IMainPanel;
 
 /**
@@ -17,6 +21,8 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
     /**
      * Creates new form RiwayatPeminjamanPanel
      */
+    List<Peminjaman> peminjamans;
+    TableModel model;
     public RiwayatPeminjamanPanel() {
         initComponents();
     }
@@ -32,9 +38,38 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
     }
     @Override
     public void refresh() {
+        String[] cols = new String[]{
+            "Kode Buku",
+            "Kode Peminjaman",
+            "Nama Peminjam",
+            "Tanggal Pinjam",
+            "Tanggal Kembali"
+        };
         
+        peminjamans = Peminjaman.fetchRiwayat();
+        Object[][] rows = new Object[peminjamans.size()][];
+        
+        int i = 0;
+        for(Peminjaman p : peminjamans){
+            rows[i++] = p.toArrayDaftar();
+        }
+        model = new DefaultTableModel(rows, cols){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        mainTable.setModel(model);
     }
-
+    public void lihatPeminjaman(){
+        int row = mainTable.getSelectedRow();
+        if(row < 0) return;
+        
+        Peminjaman p = peminjamans.get(row);
+        
+        parent.showPeminjaman(p);
+    }
     @Override
     public void load(Object object) {
     }
@@ -56,7 +91,7 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
         Header = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        mainTable = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
         lihatButton = new javax.swing.JButton();
 
@@ -87,7 +122,7 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 30, 0);
         add(Header, gridBagConstraints);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        mainTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -110,9 +145,9 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setMinimumSize(new java.awt.Dimension(0, 0));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        mainTable.setMinimumSize(new java.awt.Dimension(0, 0));
+        mainTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(mainTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -153,7 +188,7 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
 
     private void lihatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatButtonActionPerformed
         // TODO add your handling code here:
-        parent.showCard("detailbuku");
+        lihatPeminjaman();
     }//GEN-LAST:event_lihatButtonActionPerformed
 
 
@@ -162,8 +197,8 @@ public class RiwayatPeminjamanPanel extends javax.swing.JPanel implements IMainP
     private javax.swing.JPanel Header;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton lihatButton;
+    private javax.swing.JTable mainTable;
     // End of variables declaration//GEN-END:variables
 
 }

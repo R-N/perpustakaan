@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.io.File;
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -45,6 +46,15 @@ public class Perpustakaan {
         }
         //</editor-fold>
         Config.init();
+        
+        String directoryName = "covers/";
+
+
+        File directory = new File(String.valueOf(directoryName));
+
+        if(!directory.exists()){
+             directory.mkdir();
+        }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -8,6 +8,7 @@ package perpustakaan.ui.forms;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import perpustakaan.classes.LoginManager;
 import perpustakaan.util.Util;
 import perpustakaan.util.database.Database;
 
@@ -35,6 +36,11 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void showCard(String card){
         rootLayout.show(rootPanel, card);
+    }
+    
+    public void logout(){
+        LoginManager.logout();
+        showCard("login");
     }
 
     /**

@@ -97,6 +97,8 @@ public class LoginPanel extends javax.swing.JPanel {
     
     public void onLoginSucceeded(){
         parent.showCard("main");
+        usernameField.setText("");
+        passwordField.setText("");
     }
     
     public void submit(){

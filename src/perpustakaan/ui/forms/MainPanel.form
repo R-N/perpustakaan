@@ -87,6 +87,13 @@
             </Constraint>
           </Constraints>
         </Component>
+        <Component class="perpustakaan.ui.forms.DetailPeminjamanPanel" name="detailPeminjamanPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="detailpeminjaman"/>
+            </Constraint>
+          </Constraints>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

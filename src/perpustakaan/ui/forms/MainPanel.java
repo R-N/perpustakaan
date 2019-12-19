@@ -8,6 +8,7 @@ package perpustakaan.ui.forms;
 import java.util.HashMap;
 import java.util.Map;
 import perpustakaan.classes.Buku;
+import perpustakaan.classes.Peminjaman;
 import perpustakaan.ui.classes.IMainPanel;
 
 /**
@@ -20,14 +21,19 @@ public class MainPanel extends javax.swing.JPanel {
      * Creates new form MainPanel
      */
     Map<String, IMainPanel> panels = new HashMap<String, IMainPanel>();
-    
+    MainFrame parent;
     public MainPanel() {
         initComponents();
     }
     
     public void init(MainFrame parent){
+        this.parent = parent;
         init();
-        
+    }
+    
+    public void showPeminjaman(Peminjaman p){
+        showCard("detailpeminjaman");
+        detailPeminjamanPanel.load(p);
     }
     
     String currentCard = null;
@@ -38,6 +44,7 @@ public class MainPanel extends javax.swing.JPanel {
         
         panels.put("daftarbuku", daftarBukuPanel);
         panels.put("daftarpeminjaman", daftarPeminjamanPanel);
+        panels.put("detailpeminjaman", detailPeminjamanPanel);
         panels.put("detailbuku", detailBukuPanel);
         panels.put("riwayatpeminjaman", riwayatPeminjamanPanel);
         panels.put("tambahbuku", tambahBukuPanel);
@@ -72,7 +79,7 @@ public class MainPanel extends javax.swing.JPanel {
     }
         
     public void logout(){
-        
+        parent.logout();
     }
 
     /**
@@ -92,6 +99,7 @@ public class MainPanel extends javax.swing.JPanel {
         detailBukuPanel = new perpustakaan.ui.forms.DetailBukuPanel();
         riwayatPeminjamanPanel = new perpustakaan.ui.forms.RiwayatPeminjamanPanel();
         tambahBukuPanel = new perpustakaan.ui.forms.TambahBukuPanel();
+        detailPeminjamanPanel = new perpustakaan.ui.forms.DetailPeminjamanPanel();
 
         setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -111,6 +119,7 @@ public class MainPanel extends javax.swing.JPanel {
         mainPanel.add(detailBukuPanel, "detailbuku");
         mainPanel.add(riwayatPeminjamanPanel, "riwayatpeminjaman");
         mainPanel.add(tambahBukuPanel, "tambahbuku");
+        mainPanel.add(detailPeminjamanPanel, "detailpeminjaman");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
@@ -126,6 +135,7 @@ public class MainPanel extends javax.swing.JPanel {
     private perpustakaan.ui.forms.DaftarBukuPanel daftarBukuPanel;
     private perpustakaan.ui.forms.DaftarPeminjamanPanel daftarPeminjamanPanel;
     private perpustakaan.ui.forms.DetailBukuPanel detailBukuPanel;
+    private perpustakaan.ui.forms.DetailPeminjamanPanel detailPeminjamanPanel;
     private javax.swing.JPanel mainPanel;
     java.awt.CardLayout mainLayout;
     private perpustakaan.ui.forms.RiwayatPeminjamanPanel riwayatPeminjamanPanel;
