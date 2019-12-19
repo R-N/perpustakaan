@@ -27,6 +27,8 @@ public class Login extends javax.swing.JFrame {
     
     public static String username = null;
     
+    public static final String SALT = "areng";
+    
     public Login() {
         initComponents();
         init();
@@ -44,20 +46,33 @@ public class Login extends javax.swing.JFrame {
                 count = rs.getInt(1);
             }
             if(count == 0){
-                mode = MODE_REGISTER;
-                loginButton.setText("SIMPAN");
+                setMode(MODE_REGISTER);
             }else{
-                mode = MODE_LOGIN;
-                loginButton.setText("LOGIN");
+                setMode(MODE_LOGIN);
             }
         }catch(SQLException ex){
             Util.handleException(ex);
         }
     }
     
+    public void setMode(int mode){
+        if(mode == MODE_REGISTER){
+            loginButton.setText("SIMPAN");
+        }else if (mode == MODE_LOGIN){
+            loginButton.setText("LOGIN");
+        }else{
+            throw new RuntimeException("Invalid mode: " + mode);
+        }
+        this.mode = mode;
+    }
+    
+    public String readPassword(){
+        return Util.md5(passwordField.getText() + SALT);
+    }
+    
     public void login(){
         String username = usernameField.getText();
-        String password = passwordField.getText();
+        String password = readPassword();
         
         
         try{
@@ -83,16 +98,18 @@ public class Login extends javax.swing.JFrame {
     
     public void register(){
         String username = usernameField.getText();
-        String password = passwordField.getText();
+        String password = readPassword();
         try{
             PreparedStatement pstmt = Database.prepareStatement(
                     "INSERT INTO `User`(username, password) VALUES (?, ?)"
             );
             pstmt.setString(1, username);
             pstmt.setString(2, password);
+            
             int result = pstmt.executeUpdate();
             if(result > 0){
                 Login.username = username;
+                setMode(MODE_LOGIN);
                 onLoginSucceeded();
             }else{
                 Util.showError("Registrasi gagal", "Registrasi gagal");
