@@ -5,11 +5,17 @@
  */
 package perpustakaan;
 
+import classes.Peminjaman;
+import java.sql.Date;
 import perpustakaan.util.database.Database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import perpustakaan.util.Util;
-
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,12 +42,19 @@ public class Perpustakaan {
         
         try{
             java.sql.PreparedStatement pstmt = Database.prepareStatement(
-                    "INSERT INTO BUKU VALUES(?, 'asdf', 'asdf', 0)"
+                    "UPDATE peminjaman SET waktu_kembali = ? WHERE id_peminjaman = ? AND waktu_kembali = null"
             );
-            pstmt.setString(1, "trtr");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Calendar waktu = Calendar.getInstance();
+            
+            pstmt.setString(1, dateFormat.format(waktu.getTime()));
+            pstmt.setInt(2, 938300);
             pstmt.executeUpdate();
+            
         }catch(SQLException ex){
             Util.handleException(ex);
+            
+            //JOptionPane.showMessageDialog(null, "Kode buku yang diinputkan sudah ada!", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
     
