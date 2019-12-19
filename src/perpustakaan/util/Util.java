@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -20,6 +22,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.time.LocalDateTime;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import javax.xml.bind.DatatypeConverter;
 /**
  *
  * @author MojoMacW7
@@ -306,5 +311,28 @@ public class Util {
             }
         }
         return null;
+    }
+    
+    public static String md5(String source){
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(source.getBytes());
+            byte[] digest = md.digest();
+            String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            return myHash;
+        }catch(NoSuchAlgorithmException ex){
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+    public static Timestamp now(){
+        Calendar calendar = Calendar.getInstance();
+        Timestamp currentTimestamp = new Timestamp(calendar.getTimeInMillis());
+        return currentTimestamp;
+    }
+    public static Timestamp addMinute(Timestamp time, int minute){
+        return new Timestamp(time.getTime() + (1000 * 60 * minute));
+    }
+    public static String preparePhoneNumber(String number){
+        return number.trim().replace("\\-", "").replace("\\+62", "").replace("\\)", "").replace("\\(", "").replace(" ", "");
     }
 }

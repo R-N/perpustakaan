@@ -5,19 +5,108 @@
  */
 package perpustakaan.ui.forms;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import perpustakaan.classes.LoginManager;
+import perpustakaan.util.Util;
+import perpustakaan.util.database.Database;
+
 /**
  *
  * @author LENOVO
  */
-public class Login extends javax.swing.JFrame {
+public class LoginPanel extends javax.swing.JPanel {
 
+    private int mode;
+    
+    public static final int MODE_LOGIN = 1;
+    public static final int MODE_REGISTER = 0;
+    
+    public MainFrame parent;
+    
     /**
-     * Creates new form Login
+     * Creates new form LoginPanel
      */
-    public Login() {
+    public LoginPanel() {
         initComponents();
     }
+    
+    public void init(MainFrame parent){
+        setParent(parent);
+        init();
+    }
+    
+    public void setParent(MainFrame parent){
+        this.parent = parent;
+    }
 
+    public void init(){
+        try{
+            if(LoginManager.hasAccount()){
+                setMode(MODE_LOGIN);
+            }else{
+                setMode(MODE_REGISTER);
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void setMode(int mode){
+        if(mode == MODE_REGISTER){
+            loginButton.setText("SIMPAN");
+        }else if (mode == MODE_LOGIN){
+            loginButton.setText("LOGIN");
+        }else{
+            throw new RuntimeException("Invalid mode: " + mode);
+        }
+        this.mode = mode;
+    }
+    
+    public void login(){
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        
+        
+        try{
+            if(LoginManager.login(username, password)){
+                onLoginSucceeded();
+            }else{
+                Util.showError("Username atau password salah", "Login Gagal");
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void register(){
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        try{
+            if(LoginManager.register(username, password)){
+                setMode(MODE_LOGIN);
+                onLoginSucceeded();
+            }else{
+                Util.showError("Registrasi gagal", "Registrasi gagal");
+            }
+        }catch(SQLException ex){
+            Util.handleException(ex);
+        }
+    }
+    
+    public void onLoginSucceeded(){
+        parent.showCard("main");
+    }
+    
+    public void submit(){
+        
+        if(mode == MODE_LOGIN){
+            login();
+        }else{
+            register();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +117,6 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         imageLabel1 = new perpustakaan.ui.classes.ImageLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -37,25 +125,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(546, 768));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -72,7 +147,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel1, gridBagConstraints);
+        add(jPanel1, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(247, 236, 235));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
@@ -135,11 +210,11 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel4.add(jLabel4, gridBagConstraints);
 
-        username.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        username.setToolTipText("username");
-        username.addActionListener(new java.awt.event.ActionListener() {
+        usernameField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        usernameField.setToolTipText("username");
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                usernameFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -150,7 +225,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.ipady = 25;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 30, 0);
-        jPanel4.add(username, gridBagConstraints);
+        jPanel4.add(usernameField, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(84, 88, 113));
@@ -162,8 +237,12 @@ public class Login extends javax.swing.JFrame {
         jPanel4.add(jLabel5, gridBagConstraints);
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        passwordField.setText("jPasswordField1");
         passwordField.setMinimumSize(new java.awt.Dimension(0, 0));
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -174,15 +253,15 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 30, 0);
         jPanel4.add(passwordField, gridBagConstraints);
 
-        btnLogin.setBackground(new java.awt.Color(84, 88, 113));
-        btnLogin.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(247, 236, 235));
-        btnLogin.setText("LOGIN");
-        btnLogin.setMaximumSize(new java.awt.Dimension(83, 33));
-        btnLogin.setPreferredSize(new java.awt.Dimension(105, 33));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setBackground(new java.awt.Color(84, 88, 113));
+        loginButton.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(247, 236, 235));
+        loginButton.setText("LOGIN");
+        loginButton.setMaximumSize(new java.awt.Dimension(83, 33));
+        loginButton.setPreferredSize(new java.awt.Dimension(105, 33));
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -192,7 +271,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel4.add(btnLogin, gridBagConstraints);
+        jPanel4.add(loginButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
@@ -206,56 +285,26 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.6;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanel2, gridBagConstraints);
-
-        pack();
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+        submit();
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginActionPerformed
+        submit();
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+        submit();
+    }//GEN-LAST:event_loginButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
     private perpustakaan.ui.classes.ImageLabel imageLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -265,8 +314,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JTextField username;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

@@ -123,6 +123,16 @@ public class Database {
         return -1;
     }
     
+    public static ResultSet executeQuery(String query){
+        try{
+            return getInstance().conn.createStatement().executeQuery(query);
+        }catch(SQLException ex){
+            Util.handleException(ex);
+            return null;
+        }
+    }
+    
+    
     public static boolean close(){
         try {
             if (instance != null){
