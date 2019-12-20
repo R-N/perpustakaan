@@ -186,6 +186,7 @@ public class DetailPeminjamanPanel extends javax.swing.JPanel implements IMainPa
         tabel.setLayout(new java.awt.GridBagLayout());
 
         tabelkiri.setBackground(new java.awt.Color(255, 255, 255));
+        tabelkiri.setMinimumSize(new java.awt.Dimension(199, 340));
         tabelkiri.setLayout(new java.awt.GridBagLayout());
 
         coverLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/cover.png"))); // NOI18N

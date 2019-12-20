@@ -82,7 +82,15 @@ public class LoginPanel extends javax.swing.JPanel {
     
     public void register(){
         String username = usernameField.getText();
+        if(Util.isNullOrEmpty(username)){
+            Util.showError("Username tidak boleh kosong", "Error");
+            return;
+        }
         String password = passwordField.getText();
+        if(Util.isNullOrEmpty(password)){
+            Util.showError("Password tidak boleh kosong", "Error");
+            return;
+        }
         try{
             if(LoginManager.register(username, password)){
                 setMode(MODE_LOGIN);

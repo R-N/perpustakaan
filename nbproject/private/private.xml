@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/classes/ImagePanel.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/forms/DaftarPeminjamanPanel.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/forms/MainPanel.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/forms/DetailPeminjaman.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/classes/MyFrame.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/forms/DaftarBukuPanel.java</file>
-            <file>file:/G:/Semester%205/MPSI/Perpus/perpustakaan/src/perpustakaan/ui/classes/ImageLabel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/util/Util.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/TambahBukuPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/classes/Buku.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/RiwayatPeminjamanPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/Perpustakaan.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/DetailBukuPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/DetailPeminjamanPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/DaftarBukuPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/forms/DaftarPeminjamanPanel.java</file>
+            <file>file:/C:/Users/LENOVO/gitlab/mpsi19/perpustakaan/src/perpustakaan/ui/classes/ImageLabel.java</file>
         </group>
     </open-files>
 </project-private>

@@ -69,6 +69,7 @@ public class LoginManager {
     
     public static boolean register(String username, String password) throws SQLException{
         password = hashPassword(password);
+        System.out.println("Register: " + password);
         try{
             PreparedStatement pstmt = Database.prepareStatement(
                     "INSERT INTO `User`(username, password) VALUES (?, ?)"

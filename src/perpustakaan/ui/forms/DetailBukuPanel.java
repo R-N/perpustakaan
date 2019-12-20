@@ -234,6 +234,7 @@ public class DetailBukuPanel extends javax.swing.JPanel implements IMainPanel {
         tabel.setLayout(new java.awt.GridBagLayout());
 
         tabelkiri.setBackground(new java.awt.Color(255, 255, 255));
+        tabelkiri.setMinimumSize(new java.awt.Dimension(199, 342));
         tabelkiri.setLayout(new java.awt.GridBagLayout());
 
         coverLabel.setMinimumSize(new java.awt.Dimension(199, 290));
