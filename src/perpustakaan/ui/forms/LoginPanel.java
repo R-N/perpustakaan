@@ -91,6 +91,7 @@ public class LoginPanel extends javax.swing.JPanel {
             Util.showError("Password tidak boleh kosong", "Error");
             return;
         }
+        if(!Util.askConfirmation("Apa Anda yakin data sudah benar?", "Simpan Informasi Login")) return;
         try{
             if(LoginManager.register(username, password)){
                 setMode(MODE_LOGIN);

@@ -45,8 +45,8 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
             "Tanggal Pinjam",
             "Masa Tenggang"
         };
-        
-        peminjamans = Peminjaman.fetchPeminjaman();
+        String search = searchField.getText();
+        peminjamans = Peminjaman.fetchPeminjaman(search);
         Object[][] rows = new Object[peminjamans.size()][];
         
         int i = 0;
@@ -92,6 +92,10 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
 
         Header = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        searchField = new javax.swing.JTextField();
+        searchButton = new perpustakaan.ui.classes.ImageLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         mainTable = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
@@ -110,11 +114,65 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.weighty = 1.0;
         Header.add(jLabel4, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(240, 241, 247));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 219, 218), 4, true));
+        jPanel2.setMinimumSize(new java.awt.Dimension(160, 20));
+        jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(160, 20));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jPanel1.setBackground(new java.awt.Color(240, 241, 247));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 16, 8, 16));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        searchField.setBackground(new java.awt.Color(240, 241, 247));
+        searchField.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        searchField.setForeground(new java.awt.Color(149, 151, 166));
+        searchField.setBorder(null);
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(searchField, gridBagConstraints);
+
+        searchButton.setBackground(new java.awt.Color(240, 241, 247));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/search.png"))); // NOI18N
+        searchButton.setPreferredSize(new java.awt.Dimension(32, 32));
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(searchButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(jPanel1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.2;
+        Header.add(jPanel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -195,14 +253,28 @@ public class DaftarPeminjamanPanel extends javax.swing.JPanel implements IMainPa
         lihatPeminjaman();
     }//GEN-LAST:event_lihatButtonActionPerformed
 
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        // TODO add your handling code here:
+        refresh();
+    }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+        refresh();
+    }//GEN-LAST:event_searchFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lihatButton;
     private javax.swing.JTable mainTable;
+    private perpustakaan.ui.classes.ImageLabel searchButton;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 
 }

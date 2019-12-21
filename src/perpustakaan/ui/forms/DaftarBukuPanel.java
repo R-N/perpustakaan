@@ -87,7 +87,8 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
             "Status Buku"
         };
         
-        bukus = Buku.fetchBuku();
+        String search = searchField.getText();
+        bukus = Buku.fetchBuku(search);
         Object[][] rows = new Object[bukus.size()][];
         
         int i = 0;
@@ -125,8 +126,13 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         Header = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        searchField = new javax.swing.JTextField();
+        searchButton = new perpustakaan.ui.classes.ImageLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         mainTable = new javax.swing.JTable();
         Footer = new javax.swing.JPanel();
@@ -140,18 +146,14 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         Header.setOpaque(false);
         Header.setLayout(new java.awt.GridBagLayout());
 
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
         jLabel4.setFont(new java.awt.Font("Source Sans Pro Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(84, 88, 113));
         jLabel4.setText("My Book / Daftar Buku");
         jLabel4.setMinimumSize(new java.awt.Dimension(0, 0));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        Header.add(jLabel4, gridBagConstraints);
+        jPanel3.add(jLabel4);
 
         jButton1.setBackground(new java.awt.Color(218, 219, 230));
         jButton1.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
@@ -163,11 +165,66 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel3.add(jButton1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        Header.add(jPanel3, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(240, 241, 247));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 219, 218), 4, true));
+        jPanel2.setMinimumSize(new java.awt.Dimension(160, 20));
+        jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(160, 20));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jPanel1.setBackground(new java.awt.Color(240, 241, 247));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 16, 8, 16));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        searchField.setBackground(new java.awt.Color(240, 241, 247));
+        searchField.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        searchField.setForeground(new java.awt.Color(149, 151, 166));
+        searchField.setBorder(null);
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(searchField, gridBagConstraints);
+
+        searchButton.setBackground(new java.awt.Color(240, 241, 247));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/perpustakaan/ui/gambar/icon/search.png"))); // NOI18N
+        searchButton.setPreferredSize(new java.awt.Dimension(32, 32));
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        Header.add(jButton1, gridBagConstraints);
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(searchButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(jPanel1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.25;
+        Header.add(jPanel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -297,6 +354,16 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
         parent.showCard("tambahbuku");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+        refresh();
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        // TODO add your handling code here:
+        refresh();
+    }//GEN-LAST:event_searchButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Footer;
@@ -305,9 +372,14 @@ public class DaftarBukuPanel extends javax.swing.JPanel implements IMainPanel {
     private javax.swing.JButton hapusButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lihatButton;
     private javax.swing.JTable mainTable;
+    private perpustakaan.ui.classes.ImageLabel searchButton;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 
 }

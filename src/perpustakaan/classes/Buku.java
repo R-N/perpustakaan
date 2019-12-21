@@ -161,10 +161,20 @@ public class Buku {
     }
     
     public static List<Buku> fetchBuku(){
+        return fetchBuku("");
+    }
+    
+    public static List<Buku> fetchBuku(String search){
         try{
-            PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT kode_buku, judul_buku, penulis_buku, status_buku FROM buku ORDER BY kode_buku ASC"
-            );
+            String sql = "SELECT kode_buku, judul_buku, penulis_buku, status_buku FROM BUKU_SEARCH ";
+            if(!Util.isNullOrEmpty(search)){
+                sql = sql + " WHERE BUKU_SEARCH MATCH ? ";
+            }
+            sql = sql + " ORDER BY kode_buku ASC";
+            PreparedStatement pstmt = Database.prepareStatement(sql);
+            if(!Util.isNullOrEmpty(search)){
+                pstmt.setString(1, search);
+            }
             
             ResultSet rs =  pstmt.executeQuery();
             

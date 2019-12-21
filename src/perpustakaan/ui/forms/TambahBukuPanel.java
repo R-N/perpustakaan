@@ -131,6 +131,8 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
         
         if(buku == null) return false;
         
+        if(!Util.askConfirmation("Apakah data buku sudah benar?", "Simpan Buku")) return false;
+        
         boolean ret = buku.insert();
         
         if(ret){
@@ -147,6 +149,8 @@ public class TambahBukuPanel extends javax.swing.JPanel implements IMainPanel {
             copyCover(buku);
             return true;
         }
+        if(!Util.askConfirmation("Apakah data buku sudah benar?", "Simpan Buku")) return false;
+        
         boolean ret = buku1.update();
         
         if(ret){

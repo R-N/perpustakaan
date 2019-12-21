@@ -50,12 +50,21 @@ public class Peminjaman {
         this.waktuTenggang = waktuTenggang;
     }
     public static List<Peminjaman> fetchRiwayat(){
+        return fetchRiwayat("");
+    }
+    public static List<Peminjaman> fetchRiwayat(String search){
         try{
-            PreparedStatement pstmt = Database.prepareStatement(
+            String sql = 
                     "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
-                            + "FROM peminjaman WHERE waktu_kembali IS NOT NULL ORDER BY waktu_pinjam DESC"
-            );
-            
+                            + "FROM PEMINJAMAN_SEARCH WHERE waktu_kembali IS NOT NULL ";
+            if(!Util.isNullOrEmpty(search)){
+                sql = sql + " AND PEMINJAMAN_SEARCH MATCH ? ";
+            }
+            sql = sql + " ORDER BY id_peminjaman DESC";
+            PreparedStatement pstmt = Database.prepareStatement(sql);
+            if(!Util.isNullOrEmpty(search)){
+                pstmt.setString(1, search);
+            }
             ResultSet rs = pstmt.executeQuery();
             List<Peminjaman> ret = new ArrayList<Peminjaman>();
             while(rs.next()){
@@ -80,12 +89,20 @@ public class Peminjaman {
         return Buku.getBuku(kodeBuku);
     }
     public static List<Peminjaman> fetchPeminjaman(){
+        return fetchPeminjaman("");
+    }
+    public static List<Peminjaman> fetchPeminjaman(String search){
         try{
-            PreparedStatement pstmt = Database.prepareStatement(
-                    "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
-                            + "FROM peminjaman WHERE waktu_kembali IS NULL ORDER BY waktu_pinjam DESC"
-            );
-            
+            String sql = "SELECT id_peminjaman, kode_buku, nama_peminjam, telepon_peminjam, alamat_peminjam, waktu_pinjam, waktu_tenggang, waktu_kembali "
+                            + "FROM PEMINJAMAN_SEARCH WHERE waktu_kembali IS NULL ";
+            if(!Util.isNullOrEmpty(search)){
+                sql = sql + " AND PEMINJAMAN_SEARCH MATCH ? ";
+            }
+            sql = sql + " ORDER BY id_peminjaman DESC";
+            PreparedStatement pstmt = Database.prepareStatement(sql);
+            if(!Util.isNullOrEmpty(search)){
+                pstmt.setString(1, search);
+            }
             ResultSet rs = pstmt.executeQuery();
             List<Peminjaman> ret = new ArrayList<Peminjaman>();
             while(rs.next()){
