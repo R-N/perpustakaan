@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -25,7 +27,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 /**
  *
  * @author MojoMacW7
@@ -312,9 +313,10 @@ public class Util {
     public static String md5(String source){
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(StandardCharsets.UTF_8.encode(source));
             md.update(source.getBytes());
             byte[] digest = md.digest();
-            String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            String myHash = String.format("%032x", new BigInteger(1, digest));
             return myHash;
         }catch(NoSuchAlgorithmException ex){
             throw new RuntimeException(ex.getMessage());
